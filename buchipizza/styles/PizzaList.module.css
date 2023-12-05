@@ -1,0 +1,40 @@
+.container {
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.desc {
+    font-size: 24px;
+    color: #444;
+    width: 70%;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width:480px) {
+   .title{
+    text-align: center;
+   } 
+   .desc{
+    text-align: center;
+    width: 90%;
+   }
+}
+
+@media only screen and (max-width:992px) {
+    .title{
+     text-align: center;
+    } 
+    .desc{
+     text-align: center;
+     width: 90%;
+    }
+ }
