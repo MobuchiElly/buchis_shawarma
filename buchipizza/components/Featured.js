@@ -20,17 +20,17 @@ const Featured = () => {
   return (
     <div className={styles.container}>
         <div className={styles.arrowContainer} style={{left: '0'}} onClick={() => handleClick('l')}>
-            <Image src="/img/arrowl.png" alt="" layout="fill" objectFit="contain"/>
+            <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
         </div>
         <div className={styles.wrapper} style={{transform:`translateX(${-100*index}vw)`}}>
                 {images.map((image, index) => (
                             <div className={styles.imgContainer} key={index}>
-                                <Image src={image}  alt="" layout="fill" objectFit="contain"/>
+                                <Image priority={false} src={image}  alt="shawarma images" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  style={{objectFit:"contain"}} />
                             </div>
                 ))}
         </div>
         <div className={styles.arrowContainer} style={{right:'0'}} onClick={() => handleClick('r')}>
-            <Image src="/img/arrowr.png" layout="fill" objectFit="contain"/>
+            <Image src="/img/arrowr.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}} alt="scroll right"/>
         </div>
     </div>
   )

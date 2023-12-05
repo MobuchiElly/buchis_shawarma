@@ -4,8 +4,8 @@ import Image from 'next/image'
 const Footer = () => {
   return (
     <div className={styles.container}>
-      <div className={styles.item}>
-        <Image src="/img/bg.png" layout="fill" alt='' />
+      <div className={styles.item} >
+        <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>
       <div className={styles.item}>
         <div className={styles.card}>
