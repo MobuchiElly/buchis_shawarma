@@ -2,12 +2,12 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from '../styles/Featured.module.css';
 
-const Featured = () => {
+const Featured = ({ shawarmaList }) => {
     const [index, setIndex] = useState(0);
-
-    const images = [
-        "/img/shawarmaImgs/shawarma3.png", "/img/shawarmaImgs/shawarma5.png", "/img/shawarmaImgs/shawarma6.png",
-    ]
+    
+    // const images = [
+    //     "/img/shawarmaImgs/shawarma3.png", "/img/shawarmaImgs/shawarma5.png", "/img/shawarmaImgs/shawarma6.png",
+    // ]
 
     const handleClick = (direction) => {
         if (direction == 'l') {
@@ -17,15 +17,16 @@ const Featured = () => {
             setIndex(index !== 2 ? index+1 : 0)
         }
     }
+    console.log(shawarmaList, "i am in featuredjs file")
   return (
     <div className={styles.container}>
         <div className={styles.arrowContainer} style={{left: '0'}} onClick={() => handleClick('l')}>
             <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
         </div>
         <div className={styles.wrapper} style={{transform:`translateX(${-100*index}vw)`}}>
-                {images.map((image, index) => (
+                {shawarmaList.map((value, index) => (
                             <div className={styles.imgContainer} key={index}>
-                                <Image priority={false} src={image}  alt="shawarma images" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  style={{objectFit:"contain"}} />
+                                <Image priority={false} src={value.img}  alt="shawarma images" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  style={{objectFit:"contain"}} />
                             </div>
                 ))}
         </div>

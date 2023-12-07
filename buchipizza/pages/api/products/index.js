@@ -7,7 +7,7 @@ const productapi = async (req, res) => {
 
     if (req.method === 'GET') {
         try{
-            const products = Product.find();
+            const products = await Product.find();
             res.status(200).json(products);
         }catch(err){
             res.status(500).json(err);
