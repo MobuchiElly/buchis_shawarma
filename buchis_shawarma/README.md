@@ -1,1 +1,1 @@
-Built With NextJS, React, MongoDB, TailwindCSS, POSTMAN, CLOUDINARY 
+Built With NextJS, React, MongoDB, Tailwind CSS, POSTMAN, CLOUDINARY, Vercel and Git.
