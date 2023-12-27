@@ -42,7 +42,8 @@
         width: 100%;
     }
     .title{
-       font-size: 30px; 
+       font-size: 30px;
+       margin-left: ; 
     }
     .price, .desc{
         font-size: 24px;

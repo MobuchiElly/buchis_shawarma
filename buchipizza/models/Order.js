@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
         maxlength: 60,
     },
     address: {
-        type: Number,
+        type: String,
         required: true,
         maxlength: 200,
     },
@@ -23,6 +23,9 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    phonenumber: {
+        type: Number,
+    }
 }, {timestamps: true});
 
 export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

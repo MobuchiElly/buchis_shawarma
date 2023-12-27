@@ -3,43 +3,44 @@ import Image from 'next/image'
 
 const Footer = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.item} >
+    <div className='text-motto-color container-fluid flex bottom-0 text-my sm:h-auto sm:text-center' style={{height:'calc(100vh - 100px', backgroundColor:'#222', border:'10px solid green'}}>
+      <div className='md:flex flex-1 relative hidden' >
         <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>
-      <div className={styles.item}>
-        <div className={styles.card}>
-          <h2 className={styles.motto}>PIZZA OF THE HEART!</h2>
+
+      <div className='flex flex-2 relative justify-between sm:flex-col ' style={{padding:'50px'}}>
+        <div className='flex-1' style={{padding:'0 20px'}}>
+          <h2 className='text-motto-color'>The perfect spot for you and your loved ones!</h2>
         </div>
-        <div className={styles.card}>
-          <h1 className={styles.title}>FIND OUR RESTAURANTS</h1>
-          <p className={styles.text}>
+        <div className='flex-1' style={{padding:'0 20px'}}>
+          <h1 className='text-mytitle-color text-mytitle-size sm:text-30px'>FIND OUR RESTAURANTS</h1>
+          <p className=' text-lightgray sm:text-20px'>
             24 Wsdom central, Dukeles way, 
             <br/>Ikeja, Lagos,
             <br/>Nigeria
           </p>
-          <p className={styles.text}>
+          <p className=' text-lightgray sm:text-20px'>
             24 Wsdom central, Dukeles way, 
             <br/>Ikeja, Lagos,
             <br/>Nigeria
           </p>
-          <p className={styles.text}>
-            24 Wsdom central, Dukeles way, 
+          <p className=' text-lightgray sm:text-20px'>
+            24 Wisdom central, Dukeles way, 
             <br/>Ikeja, Lagos,
             <br/>Nigeria
           </p>
-          <p className={styles.text}>
-            24 Wsdom central, Dukeles way, 
+          <p className=' text-lightgray sm:text-20px'>
+            24 Wisdom central, Dukeles way, 
             <br/>Ikeja, Lagos,
             <br/>Nigeria
           </p>
         </div>
-        <div className={styles.card}>
-          <h1 className={styles.title}>WORKING HOURS</h1>
-          <p className={styles.text}>MONDAY TO FRIDAY
+        <div className='flex-1' style={{padding:'0 20px'}}>
+          <h1 className='text-mytitle-color text-mytitle-size sm:text-30px'>WORKING HOURS</h1>
+          <p className='sm:text-20px'>MONDAY TO FRIDAY
           <br />9:00am - 10:00pm
           </p>
-          <p className={styles.text}>SATURDAY - SUNDAY
+          <p className='sm:text-20px'>SATURDAY - SUNDAY
           <br />12:00pm - 12:00am
           </p>
         </div>

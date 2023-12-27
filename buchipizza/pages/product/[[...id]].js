@@ -1,67 +1,78 @@
 import styles from '../../styles/Product.module.css';
 import Image from 'next/image'
 import { useState } from 'react';
-import { Input } from 'postcss';
+import PizzaCard from '@/components/ShawarmaCard';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '@/redux/cartSlice';
 
-const Product = () => {
+const Product = ({ shawarma }) => {
   const [size, setSize] = useState(0)
+  const [price, setPrice] = useState(shawarma.prices[0])
+  const [options, setOptions] = useState([]);
+  const [quantity, setQuantity] = useState(1)
 
-  const pizza = {
-    id: 1,
-    img: '/img/pizza.png',
-    name: 'CAMPAGNOLA',
-    price: [19.9, 23.9, 27.9],
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis arcu purus, rhoncus fringilla vestibulum vel, dignissim vel ante. Nulla facilisi. Nullam a urna sit amet tellus pellentesque egestas in in ante.'
+  const dispatch = useDispatch();
+
+  const changePrice = (num) => {
+    setPrice(price + num);
   }
-  
+  const handleSize = (sizeIndex) => {
+    const diff = shawarma.prices[sizeIndex] - shawarma.prices[size];
+    setSize(sizeIndex);
+    changePrice(diff);
+  }
+  const handleChange = (e, option) => {
+    if(e.target.checked) {
+      changePrice(option.price);
+      setOptions(prev => [...prev, option])
+    }else{
+      changePrice(-option.price);
+      setOptions(options.filter(extra => extra._id !== option._id))
+    }
+  }
+
+  const handleOrder = () => {
+    dispatch(addProduct({...shawarma, options, price, quantity}))
+  }
+
   return (
     <div className={styles.container}>
         <div className={styles.left}>
         <div className={styles.imgContainer}>
-          <Image src={pizza.img} layout="fill" alt="" objectFit='contain'/>
+          <Image src={shawarma.img} fill={true} alt=""/>
         </div>
         </div>
         <div className={styles.right}>
-          <h1 className={styles.title}>{pizza.name}</h1> 
-          <span className={styles.price}>#{pizza.price[size]}</span>
-          <p className={styles.desc}>{pizza.desc}</p>
+          <h1 className={`${styles.title} uppercase`}>{shawarma.title}</h1> 
+          <span className={styles.price}>#{price}</span>
+          <p className={styles.desc}>{shawarma.desc}</p>
           <h3 className={styles.choose}>Choose the size</h3>
           <div className={styles.sizes}>
-            <div className={styles.size} onClick={() => setSize(0)}>
+            <div className={styles.size} onClick={() => handleSize(0)}>
               <Image src="/img/size.png" layout="fill" alt="" />
               <span className={styles.number} >Small</span>
             </div>
-            <div className={styles.size} onClick={() => setSize(1)}>
+            <div className={styles.size} onClick={() => handleSize(1)}>
               <Image src="/img/size.png" layout="fill" alt="" />
               <span className={styles.number} >Medium</span>
             </div>
-            <div className={styles.size} onClick={() => setSize(2)}>
+            <div className={styles.size} onClick={() => handleSize(2)}>
               <Image src="/img/size.png" layout="fill" alt="" />
               <span className={styles.number} >Large</span>
             </div>
           </div>
           <h3 className={styles.choose}>Choose additional ingredient</h3>
           <div className={styles.ingredients}>
-            <div className={styles.option}>
-              <input type="checkbox" id="double" name="double" className={styles.checkbox}/>
-              <label htmlFor='double'>Double Ingredients</label>
+            {shawarma.extraOptions.map(option => (
+              <div className={styles.option} key={shawarma._id}>
+              <input type="checkbox" id={option.text} name={option.text} className={styles.checkbox} onChange={(e) => handleChange(e, option)}/>
+              <label htmlFor='double'>{option.text}</label>
             </div>
-            <div className={styles.option}>
-              <input type="checkbox" id="cheese" name="cheese" className={styles.checkbox}/>
-              <label htmlFor='cheese'>Extra Cheese</label>
-            </div>
-            <div className={styles.option}>
-              <input type="checkbox" id="spicy" name="spicy" className={styles.checkbox}/>
-              <label htmlFor='spicy'>Spicy Sauce</label>
-            </div>
-            <div className={styles.option}>
-              <input type="checkbox" id="garlic" name="garlic" className={styles.checkbox}/>
-              <label htmlFor='garlic'>Garlic Sauce</label>
-            </div>
+            ))}
           </div>
           <div className={styles.add}>
-            <input type='number' defaultValue={1} className={`${styles.quantity} border border-black rounded`} />
-            <button className={`${styles.button} p-1 rounded`}>Add to Cart</button>
+            <input type='number' value={quantity} className={`${styles.quantity} rounded`} onChange={(e) => setQuantity(e.target.value)}/>
+            <button className={`${styles.button} p-1 rounded`} onClick={handleOrder}>Add to Cart</button>
           </div>
         </div>
     </div>
@@ -69,3 +80,15 @@ const Product = () => {
 }
 
 export default Product
+
+export const getServerSideProps = async ({params}) => {
+  
+  const res = await fetch(`${process.env.ENDPOINT_URL}/api/products/${params.id}`);
+  const shawarma = await res.json();
+  
+  return {
+    props:{
+      shawarma,
+    }
+  }
+}
