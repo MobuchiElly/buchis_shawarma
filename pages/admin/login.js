@@ -11,12 +11,14 @@ const Login = () => {
     const router = useRouter();
     const handleClickWithAxios = async () => {
         try{
-            await axios.post(`https://localhost3000/api/login`, {
+            await axios.post(`https://localhost:3000/api/login`, {
               username, password  
             });
-            router.push("/admin");
+                router.push("/admin");
+            console.log('successful');
         }catch(error){
-           setError(true);
+            console.log('error:', error);
+            setError(true);
         }
     }
     
@@ -32,7 +34,7 @@ const Login = () => {
                 setPassword(e.target.value);
                 setError(null);
               }} className="h-8 mb-8 px-3 py-1 rounded-md"/>
-            <button className="h-8 mb-4 border-none bg-green-500 text-white font-bold pointer font-normal rounded-md text-center" onClick={handleClickWithAxios}>Sign In</button>
+            <button className="h-8 mb-4 border-none bg-green-500 text-white font-bold pointer rounded-md text-center" onClick={handleClickWithAxios}>Sign In</button>
             {error && <div className="text-red-500 text-sm text-center">Wrong Login Credentials!!</div>}
         </div>
     </div>

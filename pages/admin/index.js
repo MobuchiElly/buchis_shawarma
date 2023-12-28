@@ -107,6 +107,7 @@ export const getServerSideProps = async (context) => {
         const loginCookie = context.req?.cookies || "";
         
         if(loginCookie.token !== process.env.TOKEN){
+            console.log("Invalid token detected. Redirecting to /admin/login.");
             return {
                 redirect: {
                     destination:"/admin/login",

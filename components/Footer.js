@@ -15,12 +15,12 @@ const Footer = () => {
         <div className='flex-1' style={{padding:'0 20px'}}>
           <h1 className='text-mytitle-color text-mytitle-size sm:text-30px'>FIND OUR RESTAURANTS</h1>
           <p className=' text-lightgray sm:text-20px'>
-            24 Wsdom central, Dukeles way, 
+            24 Wisdom central, Dukeles way, 
             <br/>Ikeja, Lagos,
             <br/>Nigeria
           </p>
           <p className=' text-lightgray sm:text-20px'>
-            24 Wsdom central, Dukeles way, 
+            24 Wisdom central, Dukeles way, 
             <br/>Ikeja, Lagos,
             <br/>Nigeria
           </p>
