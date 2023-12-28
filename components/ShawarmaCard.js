@@ -9,7 +9,7 @@ const ShawarmaCard = ({ shawarma }) => {
               <Image src={shawarma.img} alt='' width='500' height='500' />
               <h1 className={`${styles.title} uppercase text-center`}>{shawarma.title}</h1>
             </Link>
-            <span className={styles.price}>#{shawarma.prices[0]}</span>
+            <span className={styles.price}>₦{shawarma.prices[0]}</span>
             <p className={styles.desc}>{shawarma.desc}</p>
     </div>
   )

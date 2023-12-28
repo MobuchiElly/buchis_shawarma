@@ -12,7 +12,7 @@ const OrderDetail = ({ totalprice, createOrder }) => {
     <div className="w-full h-screen  absolute top-0 left-0 flex justify-center items-center" style={{backgroundColor:"rgba(197, 197, 197, 0.568)", zIndex:"999"}}>
       <div className="w-500 bg-white rounded p-20">
         <h1 className='text-3xl mb-4 pb-1 font-extralight flex flex-col justify-center items-center'>
-          You will pay #100 after delivery.
+          You will pay ₦100 after delivery.
         </h1>
         <div className='flex flex-col w-100 mb-1.5'>
           <label className='mb-1 '>Name Surname</label>

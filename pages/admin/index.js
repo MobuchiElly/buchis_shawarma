@@ -84,7 +84,7 @@ const Index = ({ orders, products }) => {
                 <tr>
                     <td>{order._id.slice(0, 5)}...</td>
                     <td>{order.customername}</td>
-                    <td>#{order.totalprice}</td>
+                    <td>₦{order.totalprice}</td>
                     <td>
                         {
                             order.paymentmethod === 0 ? (<span>cash</span>) : (<span>paid</span>)
