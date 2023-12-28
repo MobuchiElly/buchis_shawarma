@@ -8,7 +8,7 @@ const Footer = () => {
         <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>
 
-      <div className='flex flex-2 relative justify-between ' style={{padding:'50px'}}>
+      <div className='flex flex-col md:flex-row md:flex-2 relative justify-between ' style={{padding:'50px'}}>
         <div className='flex-1' style={{padding:'0 20px'}}>
           <h2 className='text-motto-color'>The perfect spot for you and your loved ones!</h2>
         </div>
