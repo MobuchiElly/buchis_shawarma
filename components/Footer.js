@@ -3,12 +3,12 @@ import Image from 'next/image'
 
 const Footer = () => {
   return (
-    <div className='text-motto-color container-fluid flex bottom-0 text-my sm:h-auto sm:text-center' style={{height:'calc(100vh - 100px', backgroundColor:'#222', border:'10px solid green'}}>
+    <div className='text-motto-color container-fluid bg-gray-900 flex bottom-0 text-my sm:h-auto sm:text-center' style={{height:'calc(100vh - 100px', border:'10px solid green'}}>
       <div className='md:flex flex-1 relative hidden' >
         <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>
 
-      <div className='flex flex-2 relative justify-between sm:flex-col ' style={{padding:'50px'}}>
+      <div className='flex flex-2 relative justify-between ' style={{padding:'50px'}}>
         <div className='flex-1' style={{padding:'0 20px'}}>
           <h2 className='text-motto-color'>The perfect spot for you and your loved ones!</h2>
         </div>
