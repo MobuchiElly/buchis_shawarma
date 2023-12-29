@@ -116,16 +116,26 @@ export const getServerSideProps = async (context) => {
             }
         }
 
+        try{
+            // 
+            const orderRes = await axios.get(`${process.env.ENDPOINT_URL}/api/orders`);
+            const productRes = await axios.get(`${process.env.ENDPOINT_URL}/api/products`);
 
-    const orderRes = await axios.get(`${process.env.ENDPOINT_URL}/api/orders`);
-    const productRes = await axios.get(`${process.env.ENDPOINT_URL}/api/products`);
-
-    return {
-        props:{
-            orders: orderRes.data,
-            products: productRes.data,
+            return {
+                props:{
+                    orders: orderRes.data,
+                    products: productRes.data,
+                }
+            }
+        } catch(error) {
+            console.error("Error fetching data:", error);
+            return {
+            props: {
+                orders: [],
+                products: [],
+            },
+            };
         }
-    }
 }
 
 export default Index

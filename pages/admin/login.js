@@ -10,17 +10,18 @@ const Login = () => {
 
     const router = useRouter();
     const handleClickWithAxios = async () => {
-        try{
-            await axios.post(`https://localhost:3000/api/login`, {
-              username, password  
-            });
-                router.push("/admin");
-            console.log('successful');
-        }catch(error){
-            console.log('error:', error);
-            setError(true);
-        }
-    }
+      try{  console.log('Endpoint URL:', process.env.ENDPOINT_URL);
+          await axios.post(process.env.ENDPOINT_URL + '/api/login', {
+            username, password  
+          });
+          console.log('successful');
+          router.push("/admin");
+          
+      }catch(error){
+          console.log('error:', error);
+          setError(true);
+      }
+  }
     
   return (
     <div className="h-calc-screen-minus-100 flex justify-center items-center">
