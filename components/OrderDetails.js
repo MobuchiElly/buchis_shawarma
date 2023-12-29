@@ -7,7 +7,7 @@ const OrderDetail = ({ totalprice, createOrder }) => {
   const handleSubmit = () => {
     createOrder({ customername, address, totalprice, paymentmethod: 0 });
   }
-
+  
   return (
     <div className="w-full h-screen  absolute top-0 left-0 flex justify-center items-center" style={{backgroundColor:"rgba(197, 197, 197, 0.568)", zIndex:"999"}}>
       <div className="w-500 bg-white rounded p-20">

@@ -117,7 +117,6 @@ export const getServerSideProps = async (context) => {
         }
 
         try{
-            // 
             const orderRes = await axios.get(`${process.env.ENDPOINT_URL}/api/orders`);
             const productRes = await axios.get(`${process.env.ENDPOINT_URL}/api/products`);
 

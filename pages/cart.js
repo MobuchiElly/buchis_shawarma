@@ -1,5 +1,5 @@
 import styles from '../styles/Cart.module.css'
-import OrderDetail from '@/components/OrderDetails';
+import OrderDetails from '@/components/OrderDetails';
 import Image from 'next/image';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,17 +13,16 @@ import { useState, useEffect } from 'react';
 import { reset } from '@/redux/cartSlice';
 
 
-
 const Cart = () => {
     const cart = useSelector((state) => state.cart);  
     const [showBtn, setShowbtn] = useState(false);
     const [cash, setCash] = useState(false);
     const dispatch = useDispatch();
-    const amount = cart.total;
+    const amnt = cart.total / 1250;
+    const amount = amnt;
     const currency = "USD";
     const style = { layout: "vertical" };
     const router = useRouter();
-    
     
 
     const createOrder = async (data) => {
@@ -138,13 +137,13 @@ const Cart = () => {
                                 </span>
                             </td>
                             <td>
-                                <span className={styles.price}>${product.price}</span>
+                                <span className={styles.price}>₦{product.price}</span>
                             </td>
                             <td>
                                 <span className={styles.quantity}>{product.quantity}</span>
                             </td>
                             <td>
-                                <span className={styles.total}>${product.price * product.quantity}</span>
+                                <span className={styles.total}>₦{product.price * product.quantity}</span>
                             </td>
                         </tr>
                     </tbody>
@@ -155,13 +154,13 @@ const Cart = () => {
             <div className={styles.wrapper}>
                 <h2 className={styles.title}>CART TOTAL</h2>
                 <div className={styles.totalText}>
-                    <b className={styles.totalTextTitle}>Subtotal:</b>${cart.total}
+                    <b className={styles.totalTextTitle}>Subtotal:</b>₦{cart.total}
                 </div>
                 <div className={styles.totalText}>
-                    <b className={styles.totalTextTitle}>Discount:</b>$0.00
+                    <b className={styles.totalTextTitle}>Discount:</b>₦0.00
                 </div>
                 <div className={styles.totalText}>
-                    <b className={styles.totalTextTitle}>Total:</b>${cart.total}
+                    <b className={styles.totalTextTitle}>Total:</b>₦{cart.total}
                 </div>
                 {showBtn ? (
                     <div className={`${styles.paymentMethods} flex flex-col mt-1`}>
@@ -185,7 +184,7 @@ const Cart = () => {
             </div>
         </div>
         {cash && ( 
-          <OrderDetail totalprice={cart.total} createOrder={createOrder}/>
+          <OrderDetails totalprice={cart.total} createOrder={createOrder}/>
         )}
     </div>
   )

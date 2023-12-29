@@ -10,7 +10,7 @@ const Login = () => {
 
     const router = useRouter();
     const handleClickWithAxios = async () => {
-      try{  console.log('Endpoint URL:', process.env.ENDPOINT_URL);
+      try{
           await axios.post(process.env.ENDPOINT_URL + '/api/login', {
             username, password  
           });
