@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Footer = () => {
   return (
-    <div className='text-motto-color container-fluid bg-gray-900 flex bottom-0 text-my sm:h-auto sm:text-center' style={{height:'calc(100vh - 100px', border:'10px solid green'}}>
+    <div className='text-motto-color container-fluid bg-gray-900 flex bottom-0 text-my sm:h-auto sm:text-center' style={{height:'calc(100vh - 100px'}}>
       <div className='md:flex flex-1 relative hidden' >
         <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>
