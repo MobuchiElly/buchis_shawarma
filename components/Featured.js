@@ -17,6 +17,12 @@ const Featured = ({ shawarmaList }) => {
     
   return (
     <div className={styles.container}>
+        <div className="flex justify-center p-0 m-0 max-h-24 absolute left-32 md:hidden">
+            <Image src="/img/buchislogo.png" alt="logo" width="160" height="100"/>
+        </div>
+        <div className="flex justify-center p-0 m-0 max-h-24 absolute left-40 text-center md:hidden">
+            <h1 className="text-white italic">Shawarma</h1>
+        </div>
         <div className={styles.arrowContainer} style={{left: '0'}} onClick={() => handleClick('l')}>
             <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
         </div>

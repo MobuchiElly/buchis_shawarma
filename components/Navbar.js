@@ -7,7 +7,7 @@ const Navbar = () => {
     const quantity = useSelector(state => state.cart.quantity);
     
     return (
-    <div className={`flex justify-between items-center p-x-15 bg-main-bg-600 sticky top-0 z-20`} style={{height:'100px'}}>
+    <div className='flex justify-between items-center md:p-x-15 px-4 bg-main-bg-600 sticky top-0 z-20 h-m100' >
         <div className={`flex items-center lg:flex-3 bg-blue-`} style={{flex:1}}>
             <div className={` bg-white rounded-full p-2 w-my-50 h-my-50`}>
                 <Image src="/img/telephone.png" alt='telephone' width={32} height={32}/>

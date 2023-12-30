@@ -50,10 +50,13 @@ module.exports = {
       height: {
         'calc-screen-minus-100': 'calc(100vh - 100px)',
         'my-50': '50px',
+        'm100': '100px',
       },
       padding: {
         '15': '10px',
+        '20':'20px',
         'x-15': '50px',
+        '50': '50px',
       },
       'z-index': {
         '999': 999,
