@@ -12,9 +12,19 @@ const Index = ({ orders, products }) => {
     const handleDelete = async (productId) => {
         try{
             const res = await axios.delete(`${process.env.ENDPOINT_URL}/api/products/${productId}/`);
-            setProductsList(productsList.filter((product) => product._id !== productId));
+            setProductsList(productsList.map((product) => product._id !== productId));
             
         }catch(error){
+            console.log(error);
+        }
+    }
+
+    const handleEdit = async (productId) => {
+
+        try{
+            const res = await axios.put(`${process.env.ENDPOINT_URL}/api/products/$(productId)/`);
+            setProductsList(productsList.filter((product) => (product._id === productId) ? res.data : product ));
+        } catch(error) {
             console.log(error);
         }
     }
@@ -52,11 +62,11 @@ const Index = ({ orders, products }) => {
                         <td>
                             <Image src={product.img} width={50} height={50} style={{objectFit:'cover'}} alt="shawarma image"/>
                         </td>
-                        <td>{product._id.slice(0, 5)}...</td>
+                        <td>{product._id.slice(0, 5) || null}...</td>
                         <td>{product.title}</td>
                         <td>{product.prices[0]}</td>
                         <td>
-                            <button className='p-2 pointer border-none text-white bg-teal-600 mr-7'>Edit</button>
+                            <button className='p-2 pointer border-none text-white bg-teal-600 mr-7' onClick={handleEdit}>Edit</button>
                             <button onClick={() => handleDelete(product._id)} className='p-2 pointer border-none text-white bg-crimson-800' >Delete</button>
                         </td>
                                         </tr>

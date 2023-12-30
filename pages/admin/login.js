@@ -31,7 +31,7 @@ const Login = () => {
                 setUsername(e.target.value);
                 setError(null);
             }} className="h-8 mb-5 px-3 py-1 rounded-md"/>
-            <input placeholder="password" onChange={(e) => {
+            <input type="password" placeholder="password" onChange={(e) => {
                 setPassword(e.target.value);
                 setError(null);
               }} className="h-8 mb-8 px-3 py-1 rounded-md"/>

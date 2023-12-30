@@ -20,10 +20,10 @@ const productapi = async (req, res) => {
         }
     }
     if (method === 'PUT') {
-        // if (!token || token !== process.env.TOKEN){
-        //     return res.status(401).json('Not Athenticated/Authorised');
-        // }
-
+        if(!token || token !== process.env.TOKEN) {
+            return res.status(401).json('Not Authenticated/Authorised to carry out this action')
+        }
+        
         try{
             const product = await Product.findByIdAndUpdate(id, req.body, {
                 new:true,
@@ -35,7 +35,7 @@ const productapi = async (req, res) => {
     }
     if (method === 'POST') {
         if(!token || token !== process.env.TOKEN){
-            return res.status(401).json("Not Authenticated/Authorised");
+            return res.status(401).json("Not Authenticated/Authorised to carry out this action");
         }
 
         try{
@@ -47,7 +47,7 @@ const productapi = async (req, res) => {
     }
     if (method === 'DELETE') {
         if(!token || token !== process.env.TOKEN){
-            return res.status(401).json('Not Authenicated/Authorised');
+            return res.status(401).json('Not Authenticated/Authorised to carry out this action');
         }
         
         try{
