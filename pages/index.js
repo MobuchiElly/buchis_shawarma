@@ -15,9 +15,9 @@ const Index = ({ shawarmaList, admin }) => {
    
   return (
     <div className={styles.container}>
-        <title>Pizza Restaurant in Lagos</title>
-        <meta name='description' content='Best Pizza shop in town' />
-        <Link rel='icon' href='/favicon.ico' />
+        <title>Shawarma Restaurant in Lagos</title>
+        <meta name='description' content='Best Shawarma shop in town' />
+        <Link rel='icon' href='/faviconbuchi.ico' />
       <Featured shawarmaList={shawarmaList}/>
       {admin && <AddShawarmaBtn setCloseModal={setCloseModal}/>}
       <ShawarmaList shawarmaList={shawarmaList}/>
