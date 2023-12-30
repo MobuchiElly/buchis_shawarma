@@ -10,7 +10,7 @@ const Footer = () => {
       </div>
 
       <div className='flex flex-col px-1 py-50 md:p-50 md:flex-row md:flex-2 md:relative md:justify-between'>
-        <div className='md:flex-1 mb-10 md:mb-0 px-20'>
+        <div className='md:flex-1 mb-16 md:mb-0 px-20'>
           <h2 className='text-motto-color text-xl'>The perfect spot for you and your loved ones!!!</h2>
           <h2 className='text-motto-color text-xl'>Make every bite a blissfull experience.</h2>
         </div>
