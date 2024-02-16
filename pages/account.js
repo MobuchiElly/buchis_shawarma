@@ -272,7 +272,7 @@ export const getServerSideProps = async (context) => {
     const token = JSON.parse(tokenString);
     uid = token.user.userId;
     try {
-      const userData = await getUserById("users", uid); console.log('userData: ',userData)
+      const userData = await getUserById("users", uid);
       return {
         props: {
           userData,

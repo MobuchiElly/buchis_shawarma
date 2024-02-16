@@ -26,7 +26,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
     users: false,
     admins: false,
   });
- 
+
   const handleLogout = async () => {
     await signOut(auth);
     //cookie.remove(token);
@@ -93,8 +93,8 @@ const Index = ({ orders, products, users, adminUsers }) => {
   };
   const closeModal = () => {
     setOpenModal(false);
-  }
-  
+  };
+
   return (
     <div>
       <div className="flex flex-col py-10 px-2">
@@ -163,7 +163,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
             <div className="tab-content delay-200">
               {tab.products && (
                 <div className="flex-1 delay-200">
-                  <h1 className="text-3xl font-bold mb-4 text-center">Manage Products</h1>
+                  <h1 className="text-3xl font-bold mb-4 text-center">
+                    Manage Products
+                  </h1>
                   <table className="w-100 border-spacing-2 text-left">
                     <tbody>
                       <tr>
@@ -211,7 +213,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
               )}
               {tab.orders && (
                 <div className="flex-1 w-full">
-                  <h1 className="text-3xl font-bold mb-4 text-center">Manage Orders</h1>
+                  <h1 className="text-3xl font-bold mb-4 text-center">
+                    Manage Orders
+                  </h1>
                   <table className="w-100 border-spacing-2 text-left">
                     <tbody>
                       <tr>
@@ -253,7 +257,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
               )}
               {tab.users && (
                 <div>
-                  <h1 className="text-3xl font-bold mb-4 text-center">Manage Users</h1>
+                  <h1 className="text-3xl font-bold mb-4 text-center">
+                    Manage Users
+                  </h1>
                   <table className="min-w-full border border-gray-300">
                     <thead>
                       <tr>
@@ -273,7 +279,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
                             user image here
                           </td>
                           <td className="border border-gray-300 pl-4">
-                            <span className="block">Buchi Ugwu</span>
+                            <span className="block">
+                             {`${user.name?.firstname} ${user.name?.lastname}`}
+                            </span>
                             <span className="block">{user.email}</span>
                             <span className="block">08134923317</span>
                             <span className="block">D.O.B: null null null</span>
@@ -290,7 +298,12 @@ const Index = ({ orders, products, users, adminUsers }) => {
                           <td className="border border-gray-300 pl-4">
                             <button
                               className="bg-gray-500 text-white p-1 px-2"
-                              onClick={() => handleUser({userId: user.id, isAdmin:user.isAdmin || null})}
+                              onClick={() =>
+                                handleUser({
+                                  userId: user.id,
+                                  isAdmin: user.isAdmin || null,
+                                })
+                              }
                             >
                               Edit
                             </button>
@@ -303,7 +316,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
               )}
               {tab.admins && (
                 <div>
-                  <h1 className="text-3xl font-bold mb-4 text-center">Manage Admins</h1>
+                  <h1 className="text-3xl font-bold mb-4 text-center">
+                    Manage Admins
+                  </h1>
                   <table className="min-w-full border border-gray-300">
                     <thead>
                       <tr>
@@ -336,7 +351,12 @@ const Index = ({ orders, products, users, adminUsers }) => {
                           <td className="border border-gray-300 pl-4">
                             <button
                               className="bg-gray-500 text-white p-1 px-2"
-                              onClick={() => handleUser({userId: user.id, isAdmin:user.isAdmin || null})}
+                              onClick={() =>
+                                handleUser({
+                                  userId: user.id,
+                                  isAdmin: user.isAdmin || null,
+                                })
+                              }
                             >
                               Edit
                             </button>
@@ -351,7 +371,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
           </div>
         </div>
       </div>
-      {openModal && <EditModal userDetail={userDetail} closeModal={closeModal}/>}
+      {openModal && (
+        <EditModal userDetail={userDetail} closeModal={closeModal} />
+      )}
     </div>
   );
 };

@@ -34,7 +34,7 @@ const getUserById = async (collectionName, uid) => {
 const updateUser = async (db, collectionName, uid, userData) => {
   try {
     const updateRef = doc(db, collectionName, uid);
-    await updateDoc(updateRef, userData);
+    await updateDoc(updateRef, userData); console.log('successfullly e oooo')
   } catch (error) {
     console.error("Error updating userInfo to db", error);
   }
