@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth, firebaseApp, db } from "@/authentication/firebase-config";
+import { firebaseApp, db } from "@/authentication/firebase-config";
 import { addUserToDb } from "@/HOFunctions/dbFunctions";
 
 const Login = ({ user }) => {
@@ -143,7 +143,7 @@ const Login = ({ user }) => {
         <div className="relative">
           {isUser && (
             <div>
-              Don\'t have an account?{" "}
+              Don &#39 t have an account?{" "}
               <button onClick={handleToggle} className="font-medium">
                 Register now
               </button>
