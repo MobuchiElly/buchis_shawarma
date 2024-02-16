@@ -143,7 +143,7 @@ const Login = ({ user }) => {
         <div className="relative">
           {isUser && (
             <div>
-              Don't have an account?{" "}
+              Don\'t have an account?{" "}
               <button onClick={handleToggle} className="font-medium">
                 Register now
               </button>

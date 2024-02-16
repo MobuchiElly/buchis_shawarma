@@ -20,8 +20,8 @@ const ProductList = ({ shawarmaList }) => {
       </p>
       <div className="container flex justify-center flex-wrap lg:flex-nowrap p-2">
         {shawarmaList.map((val) => (
-          <div className="border border-green-400 m-1 rounded-md">
-            <ShawarmaCard shawarma={val} key={val._id} />
+          <div className="border border-green-400 m-1 rounded-md" key={val._id}>
+            <ShawarmaCard shawarma={val} />
           </div>
         ))}
       </div>
