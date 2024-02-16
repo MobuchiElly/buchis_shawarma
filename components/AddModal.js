@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios";
 import { useRouter } from "next/router";
-import styles from '../styles/AddModal.module.css'
+import styles from '../styles/AddModal.module.css';
+import useBodyScroll from "./hooks";
 
 const AddModal = ({ setCloseModal }) => {
     const [file, setFile] = useState(null);
@@ -10,6 +11,7 @@ const AddModal = ({ setCloseModal }) => {
     const [prices, setPrices] = useState([]);
     const [extraOptions, setExtraOptions] = useState([]);
     const [extras, setExtras] = useState(null);
+    const [ mscroll, hideScroll, showScroll ] = useBodyScroll();
     
     const changePrice = (e, priceIndex) => {
         const currPrices = prices;
@@ -50,17 +52,25 @@ const AddModal = ({ setCloseModal }) => {
         }
     }
 
+    useEffect(() => {
+        hideScroll();
+
+        return () => {
+            document.body.style.overflowY = 'auto';
+        };
+    }, []);
+
   return (
-    <div className={`${styles.container} fixed w-screen h-screen top-0 m-auto flex justify-center items-center bg-black bg-transparent backdrop-blur-md`} style={{zIndex:'999'}}>
+    <div className='fixed w-screen h-screen top-0 m-auto flex justify-center items-center  bg-transparent backdrop-blur-md' style={{zIndex:'999', overflow:'hidden'}}>
         <div className=" bg-slate-100 px-7 py-5 rounded-2xl flex flex-col justify-between relative" style={{width:'600px'}}>
-            <span onClick={() => setCloseModal(true)} className="font-semibold absolute w-7 h-7 bg-slate-700 text-white flex items-center justify-center rounded-2xl pointer top-0 right-0">x</span>
+            <span onClick={() => {setCloseModal(true); hideScroll()}} className="font-semibold absolute w-7 h-7 bg-slate-700 text-white flex items-center justify-center rounded-2xl pointer top-0 right-0">x</span>
             <h1 className="text-3xl font-bold ml-0 my-2">Add a new Shawarma</h1>
             <div className="flex flex-col mb-2">
                 <label className="mb-1 text-sm font-medium">Choose an image</label>
                 <input className='border-none' type='file' onChange={(e) => setFile(e.target.files[0])}/>
             </div>
 
-            <div className="flex flex-col mb-2 mb-1 text-base font-medium">
+            <div className="flex flex-col mb-1 text-base font-medium">
                 <label className="mb-1 text-sm font-medium">Title</label>
                 <input className={`${styles.input} bg-slate-100`} type='text' onChange={(e) => setTitle(e.target.value)}/>
             </div>

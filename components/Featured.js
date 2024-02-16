@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useState } from "react";
-import styles from '../styles/Featured.module.css';
+
 
 const Featured = ({ shawarmaList }) => {
     const [index, setIndex] = useState(0);
-    const [shawarma, setShawarma] = useState(shawarmaList.slice(0, 3));
+    const [shawarma, setShawarma] = useState(shawarmaList.slice(0, 3) || null);
     
     const handleClick = (direction) => {
         if (direction == 'l') {
@@ -15,19 +15,19 @@ const Featured = ({ shawarmaList }) => {
         }
     }
     
-  return (
-    <div className={styles.container}>
-        <div className={styles.arrowContainer} style={{left: '0'}} onClick={() => handleClick('l')}>
+  return ( 
+    <div className='h-calc-screen-minus-100 bg-main-bg-600 overflow-hidden relative'>
+        <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{left: '0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('l')}>
             <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
         </div>
-        <div className={styles.wrapper} style={{transform:`translateX(${-100*index}vw)`}}>
+        <div className='flex' style={{transform:`translateX(${-100*index}vw)`, transition:'all 1.5s ease-in-out', height:'100%', width:'300vw'}}>
                 {shawarma.map((value, index) => (
-                            <div className={styles.imgContainer} key={index}>
+                            <div className='relative w-100vw h-100%' key={index}>
                                 <Image priority={false} src={value.img}  alt="shawarma images" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  style={{objectFit:"contain"}} />
                             </div>
                 ))}
         </div>
-        <div className={styles.arrowContainer} style={{right:'0'}} onClick={() => handleClick('r')}>
+        <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{right:'0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('r')}>
             <Image src="/img/arrowr.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}} alt="scroll right"/>
         </div>
     </div>
