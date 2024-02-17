@@ -16,19 +16,21 @@ const Featured = ({ shawarmaList }) => {
     }
     
   return ( 
-    <div className='bg-main-bg-600 overflow-hidden relative mb-20' style={{height:'calc(100vh - 100px)'}}>
-        <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{left: '0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('l')}>
-            <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
-        </div>
-        <div className='flex' style={{transform:`translateX(${-100*index}vw)`, transition:'all 1.5s ease-in-out', height:'100%', width:'300vw'}}>
-                {shawarma.map((value, index) => (
-                            <div className='relative w-100vw h-100%' key={index}>
-                                <Image priority={false} src={value.img}  alt="shawarma images" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  style={{objectFit:"contain"}} />
-                            </div>
-                ))}
-        </div>
-        <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{right:'0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('r')}>
-            <Image src="/img/arrowr.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}} alt="scroll right"/>
+    <div className='bg-main-bg-600 overflow-hidden' style={{height:'calc(100vh - 100px)'}}>
+        <div className="h-full mb-20 md:mb-0">
+            <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{left: '0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('l')}>
+                <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
+            </div>
+            <div className='flex' style={{transform:`translateX(${-100*index}vw)`, transition:'all 1.5s ease-in-out', height:'100%', width:'300vw'}}>
+                    {shawarma.map((value, index) => (
+                                <div className='relative w-100vw h-100%' key={index}>
+                                    <Image priority={false} src={value.img}  alt="shawarma images" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  style={{objectFit:"contain"}} />
+                                </div>
+                    ))}
+            </div>
+            <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{right:'0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('r')}>
+                <Image src="/img/arrowr.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}} alt="scroll right"/>
+            </div>
         </div>
     </div>
   )
