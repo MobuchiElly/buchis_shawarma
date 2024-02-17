@@ -1,17 +1,13 @@
-'use client'
+"use client";
 import Image from "next/image";
-import {useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import NavDropDown from "./NavDropDown";
-import MobileNav from '../components/MobileNav';
+import MobileNav from "../components/MobileNav";
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
- 
 
-  const toggleNavbar = () => {
-
-  }
   const content = {
     contact: {
       line1: "buchidevv@gmail.com",
@@ -22,8 +18,17 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center md:p-x-15 pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m100 z-50">
       <div className="md:hidden">
-        <Image src="/img/buchislogo.png" alt="logo" width="110" height="80" className="" style={{top:'0px'}}/>
-        <span className="text-white absolute top-16 left-4 italic text-sm font-light ">Shawarma</span>
+        <Image
+          src="/img/buchislogo.png"
+          alt="logo"
+          width="110"
+          height="80"
+          className=""
+          style={{ top: "0px" }}
+        />
+        <span className="text-white absolute top-16 left-4 italic text-sm font-light ">
+          Shawarma
+        </span>
       </div>
       <div className="hidden md:flex md:items-center lg:flex-3 flex-1">
         <div className="bg-white rounded-full p-2 w-my-50 h-my-50">
@@ -39,7 +44,7 @@ const Navbar = () => {
           <div className="font-bold text-xl">08134923317</div>
         </div>
       </div>
-      
+
       {/*Navbar Lists*/}
       <div className=" hidden lg:block relative" style={{ flex: 3 }}>
         <ul className="p-0 flex items-center justify-center list-none text-white">
@@ -77,7 +82,6 @@ const Navbar = () => {
             </div>
           </div>
         </Link>
-        
       </div>
       <MobileNav />
     </div>
