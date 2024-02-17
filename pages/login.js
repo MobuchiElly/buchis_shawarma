@@ -61,7 +61,7 @@ const Login = ({ user }) => {
         );
         const id = userCred.user.uid;
         await addUserToDb(db, "users", id, {
-          name: { firstname: fname, middlename:'', lastname:lname },
+          name: { firstname: fname, middlename: "", lastname: lname },
           email,
           password,
         });
@@ -87,22 +87,22 @@ const Login = ({ user }) => {
           <h1 className="font-bold text-center text-3xl mb-4">Register Now</h1>
         )}
         {!isUser && (
-          <div className="lg:flex mb-5 lg:justify-between lg:item-center w-full">
+          <div className="md:flex mb-3 md:mb-5 md:justify-between md:item-center">
             <input
-              placeholder="John Albert"
+              placeholder="John"
               onChange={(e) => {
                 setFName(e.target.value);
                 setError(null);
               }}
-              className="h-8 px-3 py-1 bg-slate-100 rounded-md"
+              className="h-8 px-3 py-1 rounded-md w-100% md:w-50% mb-3 md:mb-0 bg-transparent"
             />
             <input
-              placeholder="John Albert"
+              placeholder="Albert"
               onChange={(e) => {
                 setLName(e.target.value);
                 setError(null);
               }}
-              className="h-8 px-3 py-1 bg-slate-100 rounded-md"
+              className="h-8 px-3 py-1 rounded-md w-full md:w-50% bg-transparent"
             />
           </div>
         )}
@@ -112,7 +112,7 @@ const Login = ({ user }) => {
             setEmail(e.target.value);
             setError(null);
           }}
-          className="h-8 bg-slate-100 mb-5 px-3 py-1 rounded-md"
+          className="h-8 mb-3 md:mb-5 px-3 md:py-1 rounded-md bg-transparent"
         />
         <input
           type="password"
@@ -121,7 +121,7 @@ const Login = ({ user }) => {
             setPassword(e.target.value);
             setError(null);
           }}
-          className="h-8 bg-slate-100 mb-8 px-3 py-1 rounded-md"
+          className="h-8 mb-8 px-3 md:py-1 rounded-md bg-transparent"
         />
         {isUser && (
           <button
