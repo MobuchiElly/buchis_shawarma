@@ -16,7 +16,7 @@ const Featured = ({ shawarmaList }) => {
     }
     
   return ( 
-    <div className='bg-main-bg-600 overflow-hidden relative' style={{height:'calc(100vh - 100px)'}}>
+    <div className='bg-main-bg-600 overflow-hidden relative mb-20' style={{height:'calc(100vh - 100px)'}}>
         <div className='absolute top-0 bottom-0 m-auto cursor-pointer' style={{left: '0', height:'10%', width:'10%', zIndex:'2'}} onClick={() => handleClick('l')}>
             <Image src="/img/arrowl.png" alt="scroll left" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" style={{objectFit:"contain"}}/>
         </div>
