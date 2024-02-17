@@ -78,8 +78,8 @@ const Login = ({ user }) => {
   };
 
   return (
-    <div className=" bg-slate-200 flex justify-center items-center" style={{height:'calc(100vh - 100px)'}}>
-      <div className="flex flex-col border-2 border-slate-300 w-auto h-auto px-5 py-10 rounded-xl justify-center">
+    <div className="bg-slate-200 flex justify-center items-center" style={{height:'calc(100vh - 100px)'}}>
+      <div className="flex flex-col border-2 border-slate-300 w-auto h-auto px-5 py-10 rounded-xl justify-center mb-6">
         {isUser && (
           <h1 className="font-bold text-3xl text-center mb-4">Account Login</h1>
         )}
@@ -112,7 +112,7 @@ const Login = ({ user }) => {
             setEmail(e.target.value);
             setError(null);
           }}
-          className="h-8 mb-3 md:mb-5 px-3 md:py-1 rounded-md bg-transparent"
+          className="h-8 mb-3 md:mb-5 px-3 py-1 rounded-md bg-transparent"
         />
         <input
           type="password"
@@ -121,11 +121,11 @@ const Login = ({ user }) => {
             setPassword(e.target.value);
             setError(null);
           }}
-          className="h-8 mb-8 px-3 md:py-1 rounded-md bg-transparent"
+          className="h-8 mb-8 px-3 py-1 rounded-md bg-transparent"
         />
         {isUser && (
           <button
-            className="h-8 mb-4 border-none bg-green-400 hover:bg-green-500 hover:text-lg delay-100 text-white font-bold pointer rounded-md text-center"
+            className="h-8 mb-4 border-none bg-green-400 hover:bg-green-500 p-1 delay-100 text-white font-bold pointer rounded-md text-center"
             onClick={handleSignIn}
           >
             Sign In
@@ -133,7 +133,7 @@ const Login = ({ user }) => {
         )}
         {!isUser && (
           <button
-            className="h-8 mb-4 border-none bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-lg text-white font-bold pointer rounded-md text-center"
+            className="h-8 mb-4 p-1 border-none bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-lg text-white font-bold pointer rounded-md text-center"
             onClick={handleSignUp}
           >
             Sign Up
