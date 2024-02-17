@@ -79,7 +79,7 @@ const Login = ({ user }) => {
 
   return (
     <div className="bg-slate-200 flex justify-center items-center" style={{height:'calc(100vh - 100px)'}}>
-      <div className="flex flex-col border-2 border-slate-300 w-auto h-auto px-5 py-8 rounded-xl justify-center mb-8 md:mb-6">
+      <div className="flex flex-col border-2 border-slate-300 w-auto h-auto px-5 py-8 rounded-xl justify-center mb-10 md:mb-6">
         {isUser && (
           <h1 className="font-bold text-3xl text-center mb-4">Account Login</h1>
         )}
