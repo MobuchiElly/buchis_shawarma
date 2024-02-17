@@ -29,13 +29,13 @@ const AddModal = ({ setCloseModal }) => {
     
     const handleExtra = (e) => {
         setExtraOptions((prev) => [...prev, extras]);
-    }
+    }; 
     const handleCreate = async () => {
         const data = new FormData();
         data.append("file", file);
         data.append("upload_preset", "uploadsDB")
         try{
-            const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dxxunjcln/image/upload", data);
+            const uploadRes = await axios.post(process.env.NEXT_PUBLIC_CLOUDINARY_ENDPOINT, data);
 
             const { url } = uploadRes.data;
             const newProduct = {

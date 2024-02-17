@@ -8,8 +8,8 @@ const ShawarmaCard = ({ shawarma }) => {
               <Image src={shawarma.img} alt='' width='500' height='500' />
               <h1 className='text-30px md:text-18px font-bold uppercase text-main-color text-center'>{shawarma.title}</h1>
             </Link>
-            <span className='text-24px md:text-18px font-bold text-#666'>₦{shawarma.prices[0]}</span>
-            <p className='text-#777 text-center text-24px md:text-base'>{shawarma.desc}</p>
+            <span className='text-22px md:text-18px font-bold text-#666'>₦{shawarma.prices[0]}</span>
+            <p className='text-#777 text-center text-22px md:text-base'>{shawarma.desc}</p>
     </div>
   )
 }

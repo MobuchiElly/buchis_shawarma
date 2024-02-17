@@ -79,7 +79,7 @@ const Login = ({ user }) => {
 
   return (
     <div className="h-calc-screen-minus-100 bg-slate-200 flex justify-center items-center">
-      <div className="flex flex-col border-2 border-slate-300 w-35vw h-auto px-5 py-10 rounded-xl justify-center">
+      <div className="flex flex-col border-2 border-slate-300 w-auto h-auto px-5 py-10 rounded-xl justify-center">
         {isUser && (
           <h1 className="font-bold text-3xl text-center mb-4">Account Login</h1>
         )}
