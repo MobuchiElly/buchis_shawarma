@@ -176,15 +176,17 @@ const Cart = () => {
         )}
         {cart.quantity == 0 && (
           <div>
-            <div className="p-2 text-center text-lg font-semibold mb-1">
+            <div className="p-2 text-center text-lg font-semibold mb-3  lg:mb-1">
               You have no products added to cart presently. Want to place an
               order?{" "}
-              <Link
-                href={"/products"}
-                className="bg-slate-600 text-white rounded-lg p-2 ml-0"
-              >
-                Order Now
-              </Link>
+              <div className="mt-2 lg:mt-0 ml-0 inline-flex">
+                <Link
+                  href={"/products"}
+                  className="bg-slate-600 text-white rounded-lg p-2"
+                >
+                  Order Now
+                </Link>
+              </div>
             </div>
           </div>
         )}

@@ -30,7 +30,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
   const handleLogout = async () => {
     await signOut(auth);
     //cookie.remove(token);
-    router.push("/login/admin");
+    router.push("/admin/login");
   };
 
   const handleDelete = async (productId) => {
@@ -99,17 +99,17 @@ const Index = ({ orders, products, users, adminUsers }) => {
     <div>
       <div className="flex flex-col py-10 px-2">
         <div className="relative">
-          <div className="text-center font-semibold text-4xl">
+          <div className="text-center font-semibold text-4xl mt-1 lg:mt-0">
             Welcome Admin
           </div>
           <button
-            className="absolute top-9 right-56 mr-3 bg-red-700 text-white rounded-lg p-2"
+            className="absolute top-neg-12 lg:top-9 right-0 lg:right-56 mr-3 bg-red-700 text-white rounded-lg p-2"
             onClick={handleLogout}
           >
             LogOut
           </button>
         </div>
-        <div className="border-4 max-w-4xl container mx-auto my-10 bg-gray-100">
+        <div className="border-4 max-w-4xl container mx-auto my-6 lg:my-10 bg-gray-100">
           {/* Navigation Tabs */}
           <ul className="flex items-center h-12 bg-gray-600 text-white font-normal text-sm rounded-sm ">
             <li

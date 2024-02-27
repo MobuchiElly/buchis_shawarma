@@ -72,6 +72,7 @@ module.exports = {
       },
       height: {
         'calc-screen-minus-100': 'calc(100vh - 100px)',
+        '1.7px': '1.7px',
         '20px': '20px',
         '25px': '25px',
         '30px': '30px',
@@ -124,6 +125,8 @@ module.exports = {
         '50': '50px',
       },
       spacing: {
+        '-10px': '-10px',
+        'neg-12': '-35px',
         '0px': '0px',
         '10px': '10px',
         '15px': '15px',
