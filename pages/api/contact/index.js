@@ -14,14 +14,16 @@ const handler = async (req, res) => {
   });
 
   const messageData = {
-    from: "Contact Form <mailgun@sandbox6208b957a90d4c338a1414040f0aaec6.mailgun.org>",
-    to: "buchi@buchidevv.com",
+    // from: "Contact Form <mailgun@sandbox6208b957a90d4c338a1414040f0aaec6.mailgun.org>",
+    from: "Contact Form <buchidev.com>",
+    to: "buchidevv@gmail.com",
     subject: "New Contact Form",
-    text: `Hello,
+    text: `Hello Admin,
     
     You have a new form entry from: ${name} ${email},
     
     ${subject}
+    
     ${message}`,
     //   html: "<h1>Testing some Mailgun awesomeness!</h1>,
   };
