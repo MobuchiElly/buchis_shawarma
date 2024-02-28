@@ -162,7 +162,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
             {/* Home Tab Content */}
             <div className="tab-content delay-200 pl-2 md:pl-4 ">
               {tab.products && (
-                <div className="delay-200 ">
+                <div className="delay-200 overflow-x-auto">
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Products
                   </h1>
@@ -191,9 +191,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
                           <td>{product._id.slice(0, 5) || null}...</td>
                           <td>{product.title}</td>
                           <td>{product.prices[0]}</td>
-                          <td>
+                          <td className="flex">
                             <button
-                              className="p-2 pointer border-none text-white bg-teal md:mr-7"
+                              className="p-2 px-3 pointer border-none text-white bg-teal mr-4 lg:mr-7"
                               onClick={() => handleEdit(product._id)}
                             >
                               Edit
@@ -212,7 +212,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                 </div>
               )}
               {tab.orders && (
-                <div className="w-full">
+                <div className="w-full overflow-x-auto">
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Orders
                   </h1>
@@ -256,7 +256,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                 </div>
               )}
               {tab.users && (
-                <div>
+                <div className="overflow-x-auto">
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Users
                   </h1>
@@ -315,7 +315,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                 </div>
               )}
               {tab.admins && (
-                <div>
+                <div className="overflow-x-auto">
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Admins
                   </h1>
