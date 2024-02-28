@@ -93,7 +93,7 @@ export default About;
 export const getServerSideProps = () => {
   return {
     redirect: {
-      destination: "/",
+      destination: "/about/page-under-upgrade",
       permanent: false,
     },
   };
