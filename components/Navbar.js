@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between items-center md:p-x-15 pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m100 z-50">
-      <div className="md:hidden absolute top-[-12px]">
+      <div className="md:hidden absolute top-[-16px]">
         <Image src="/img/buchislogo.png" alt="logo" width="110" height="80" />
         <span className="text-white absolute top-16 left-4 italic text-sm font-light mt-1">
           Shawarma
