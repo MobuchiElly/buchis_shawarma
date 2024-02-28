@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const Order = ({order}) => {
     const status = order.status; console.log(order.status);
-    console.log('hello world');
 
     const renderui = (index) => {
         if (index - status < 1) 

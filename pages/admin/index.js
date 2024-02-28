@@ -160,15 +160,15 @@ const Index = ({ orders, products, users, adminUsers }) => {
           {/* Tab Content */}
           <div className="p-4 bg-white shadow">
             {/* Home Tab Content */}
-            <div className="tab-content delay-200">
+            <div className="tab-content delay-200 pl-2 md:pl-4 ">
               {tab.products && (
-                <div className="flex-1 delay-200">
+                <div className="delay-200 ">
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Products
                   </h1>
-                  <table className="w-100 border-spacing-2 text-left">
-                    <tbody>
-                      <tr>
+                  <table className="w-full border-spacing-2 text-left ">
+                    <tbody className="">
+                      <tr className="">
                         <th>Image</th>
                         <th>Id</th>
                         <th>Title</th>
@@ -177,7 +177,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                       </tr>
                     </tbody>
                     {productsList.map((product) => (
-                      <tbody key={product._id}>
+                      <tbody key={product._id} className=''>
                         <tr>
                           <td>
                             <Image
@@ -193,8 +193,8 @@ const Index = ({ orders, products, users, adminUsers }) => {
                           <td>{product.prices[0]}</td>
                           <td>
                             <button
-                              className="p-2 pointer border-none text-white bg-teal-600 mr-7"
-                              onClick={handleEdit}
+                              className="p-2 pointer border-none text-white bg-teal md:mr-7"
+                              onClick={() => handleEdit(product._id)}
                             >
                               Edit
                             </button>
@@ -212,11 +212,11 @@ const Index = ({ orders, products, users, adminUsers }) => {
                 </div>
               )}
               {tab.orders && (
-                <div className="flex-1 w-full">
+                <div className="w-full">
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Orders
                   </h1>
-                  <table className="w-100 border-spacing-2 text-left">
+                  <table className="w-full border-spacing-2 text-left ">
                     <tbody>
                       <tr>
                         <th>Id</th>

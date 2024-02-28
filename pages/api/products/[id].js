@@ -35,7 +35,7 @@ const productapi = async (req, res) => {
     }
     if (method === 'POST') {
         if(!token || token !== process.env.TOKEN){
-            return res.status(401).json("Not Authenticated/Authorised to carry out this action");
+            return res.status(401).json("Not Authorised to carry out this action");
         }
 
         try{
