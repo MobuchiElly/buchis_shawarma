@@ -8,7 +8,7 @@ const Maintenance = () => {
           This page is currently undergoing maintenance
         </h1>
         <p className="text-lg mb-6">
-          We're sorry for the inconvenience. Please check back later.
+          We&lsquo;re sorry for the inconvenience. Please check back later.
         </p>
         <Link href="/">
           <span className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
