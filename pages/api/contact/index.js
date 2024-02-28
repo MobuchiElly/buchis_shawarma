@@ -12,7 +12,7 @@ const handler = async (req, res) => {
       username: "api",
       key: API_KEY,
     });
-
+    
     const messageData = {
       from: `Contact Form ${process.env.EMAIL_DOMAIN}`,
       to: process.env.ADMIN_EMAIL,
