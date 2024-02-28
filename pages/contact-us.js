@@ -27,11 +27,14 @@ const Contact = () => {
   };
   const handleModal = () => {
     setIsSubmitted(!isSubmitted);
-  }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.ENDPOINT_URL}/api/contact`, formData);
+      const res = await axios.post(
+        `${process.env.ENDPOINT_URL}/api/contact`,
+        formData
+      );
       setFormData({
         name: "",
         email: "",
@@ -39,14 +42,19 @@ const Contact = () => {
         message: "",
       });
       handleModal();
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   };
-  const content = <div>Thank you for contacting us.<br/> We would respond to your message shortly.</div>
+  const content = (
+    <div>
+      Thank you for contacting us.
+      <br /> We would respond to your message shortly.
+    </div>
+  );
 
   return (
-    <div className="w-screen" style={{height: 'calc(100vh-100px)'}}>
+    <div className="w-screen" style={{ height: "calc(100vh-100px)" }}>
       <Head>
         <title>Contact Us - Buchis Shawarma</title>
         <meta
@@ -54,7 +62,9 @@ const Contact = () => {
           content="Contact us for orders and enquiries"
         />
       </Head>
-      {isSubmitted && <MessageModal content={content} handleModal={handleModal}/>}
+      {isSubmitted && (
+        <MessageModal content={content} handleModal={handleModal} />
+      )}
       <div className="text-center p-2 mt-3">
         <p className="text-gray-700 font-bold text-3xl mb-2">
           Support and Enquiries
@@ -187,3 +197,12 @@ const Contact = () => {
 };
 
 export default Contact;
+
+export const getServerSideProps = () => {
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+};
