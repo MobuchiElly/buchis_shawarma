@@ -103,7 +103,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
             Welcome Admin
           </div>
           <button
-            className="absolute top-neg-12 lg:top-9 right-0 lg:right-56 mr-3 bg-red-700 text-white rounded-lg p-2"
+            className="absolute top-neg-12 lg:top-9 right-0 lg:right-80 mr-12 bg-red-700 text-white rounded-lg p-2"
             onClick={handleLogout}
           >
             LogOut
