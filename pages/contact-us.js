@@ -10,6 +10,7 @@ import {
   FaAmilia,
 } from "react-icons/fa";
 import { FiMail, FiPhone } from "react-icons/fi";
+import MessageModal from "@/components/MessageModal";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,21 +19,31 @@ const Contact = () => {
     subject: "",
     message: "",
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const handleModal = () => {
+    setIsSubmitted(!isSubmitted);
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(`${process.env.ENDPOINT_URL}/api/contact`, formData);
-      
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+      handleModal();
     } catch(err) {
       console.error(err);
     }
   };
+  const content = <div>Thank you for contacting us.<br/> We would respond to your message shortly.</div>
 
   return (
     <div className="w-screen" style={{height: 'calc(100vh-100px)'}}>
@@ -43,6 +54,7 @@ const Contact = () => {
           content="Contact us for orders and enquiries"
         />
       </Head>
+      {isSubmitted && <MessageModal content={content} handleModal={handleModal}/>}
       <div className="text-center p-2 mt-3">
         <p className="text-gray-700 font-bold text-3xl mb-2">
           Support and Enquiries
