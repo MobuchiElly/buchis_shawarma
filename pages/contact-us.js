@@ -72,7 +72,7 @@ const Contact = () => {
                   <FaMapMarkerAlt className="h-10 w-10 mr-2 p-2.5" />
                 </span>
               </div>
-              <div className="h-auto">
+              <div className="h-auto pr-3 lg:pr-0">
                 <h4 className="font-medium">Location:</h4>
                 <p>24 Wisdom central, Dukeles way, Ikeja Lagos, Nigeria</p>
               </div>
