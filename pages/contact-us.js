@@ -197,12 +197,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
-export const getServerSideProps = () => {
-  return {
-    redirect: {
-      destination: "/",
-      permanent: false,
-    },
-  };
-};

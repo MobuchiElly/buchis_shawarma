@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
+import {redirect} from 'next/navigation';
 
 const About = () => {
   return (
@@ -88,3 +89,12 @@ const About = () => {
 };
 
 export default About;
+
+export const getServerSideProps = () => {
+  return {
+    redirect: {
+      destination: "/",
+      permanent: false,
+    },
+  };
+};
