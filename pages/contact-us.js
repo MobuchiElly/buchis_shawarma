@@ -26,13 +26,12 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
     try {
       const res = await axios.post(`${process.env.ENDPOINT_URL}/api/contact`, formData);
+      
     } catch(err) {
       console.error(err);
     }
-    
   };
 
   return (
