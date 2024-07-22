@@ -42,7 +42,7 @@ const Product = ({ shawarma }) => {
   return (
     <div className={`${styles.container} h-auto lg:h-calc-screen-minus-100 border border-green-600 space-y-3 pb-6 px-2`}>
         
-        <div className="lg:mx-10 lg:w-[80vw] flex gap-4 lg:gap-10 text-center lg:text-justify mt-20px lg-mt-1">
+        <div className="lg:mx-10 lg:w-[80vw] flex gap-2 lg:gap-10 text-center lg:text-justify mt-20px lg-mt-1">
           <div className='flex-1 h-100% flex flex-col space-y-2'>
             <Image src={shawarma.img} width="600" height="400"/>
             <span className='lg:hidden text-main-color mx-10 text-24px font-400' style={{borderBottom:'1px solid #d1411e'}}>₦{price}</span>
@@ -81,7 +81,7 @@ const Product = ({ shawarma }) => {
             </div>
           </div>
         </div>
-        <div className='lg:hidden my-1'>
+        <div className='lg:hidden my-1 space-y-2'>
             <h3 className='font-semibold text-xl text-center pb-3'>Choose the size</h3>
             <div className='flex w-full justify-around lg:w-40% sm:px-4 sm:py-0 lg:px-0px lg:py-0px' >
               <div className='cursor-pointer relative w-30px h-30px' onClick={() => handleSize(0)}>
@@ -98,7 +98,7 @@ const Product = ({ shawarma }) => {
               </div>
             </div>
             <h3 className={`text-center ${styles.choose}`}>Choose additional ingredient</h3>
-            <div className='flex flex-col mb-3 mx-2'>
+            <div className='flex mb-4 mx-2'>
               {shawarma.extraOptions.map(option => (
                 <div className='flex items-center mr-1 text-18px lg:text-14px font-my500 sm:m-1 ' style={{marginRight:'10px'}} key={shawarma._id}>
                 <input type="checkbox" id={option.text} name={option.text} className='w-25px lg:w-20px h-25px lg:h-20px' onChange={(e) => handleChange(e, option)}/>
@@ -106,7 +106,7 @@ const Product = ({ shawarma }) => {
               </div>
               ))}
             </div>
-            <div className='container flex justify-center'>
+            <div className='container flex justify-center py-2'>
               <input type='number' value={quantity} min='0' className=' sm:h-50px w-50px lg:h-8 rounded indent-2' onChange={(e) => setQuantity(e.target.value)}/>
               <button onClick={handleOrder} className={`${styles.button} bgmain bg-main-bg-600 text-white border-none font-medium cursor-pointer ml-10px px-2 text-center sm:h-50px lg:h-8 `}>Add to Cart</button>
             </div>
