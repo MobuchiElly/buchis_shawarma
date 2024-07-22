@@ -8,9 +8,9 @@ const productapi = async (req, res) => {
         cookies, 
     } = req;
 
-    await dbConnect();
     const token = cookies.token;
-
+    await dbConnect();
+    
     if (method === 'GET') {
         try{
             const product = await Product.findById(id);
@@ -20,10 +20,9 @@ const productapi = async (req, res) => {
         }
     }
     if (method === 'PUT') {
-        if(!token || token !== process.env.TOKEN) {
-            return res.status(401).json('Not Authenticated/Authorised to carry out this action')
-        }
-        
+        // if(!token) {
+        //     return res.status(401).json('Not Authenticated/Authorised to carry out this action')
+        // }
         try{
             const product = await Product.findByIdAndUpdate(id, req.body, {
                 new:true,
@@ -34,10 +33,9 @@ const productapi = async (req, res) => {
         }
     }
     if (method === 'POST') {
-        if(!token || token !== process.env.TOKEN){
+        if(!token){
             return res.status(401).json("Not Authorised to carry out this action");
         }
-
         try{
             const product = await Product.create(req.body);
             res.status(201).json(product);
@@ -46,10 +44,9 @@ const productapi = async (req, res) => {
         }
     }
     if (method === 'DELETE') {
-        if(!token || token !== process.env.TOKEN){
+        if(!token){
             return res.status(401).json('Not Authenticated/Authorised to carry out this action');
         }
-        
         try{
             await Product.findByIdAndDelete(id);
             res.status(200).json("Item successfully deleted");

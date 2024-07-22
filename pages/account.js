@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
 import { firebaseApp, db } from "@/authentication/firebase-config";
 import { useRouter } from "next/router";
-import { updateUser, getUserById } from "@/HOFunctions/dbFunctions";
+import { updateUser, getUserById, getAllUsers } from "@/HOFunctions/dbFunctions";
 import cookie from "js-cookie";
 import Link from "next/link";
 
@@ -18,6 +18,9 @@ const Dashboard = ({ userData }) => {
     history: false,
     cartSummary: false,
   });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const auth = getAuth(firebaseApp);
   const router = useRouter();
   const uid = auth.currentUser?.uid;
@@ -44,6 +47,7 @@ const Dashboard = ({ userData }) => {
         state: residenceState,
       });
     } catch (error) {
+      setError('Please fill all fields');
       console.error("error updating user profile", error);
     }
   };
@@ -52,68 +56,68 @@ const Dashboard = ({ userData }) => {
       if (!userData) {
         console.error("Error loading user-data from database");
         return;
-      }
+      }; 
+      
       const { name, state } = userData;
       if (name) {
         const { firstname, middlename, lastname } = name;
-
-        fname == "" ? setFname(firstname) : null;
-        lname == "" ? setLname(lastname) : null;
-        mname == "" ? setMname(middlename) : null;
+        fname == "" ? setFname(firstname) : "";
+        lname == "" ? setLname(lastname) : "";
+        mname == "" ? setMname(middlename) : "";
       }
-      contact == "" ? setContact(userData.contact) : null;
-      address == "" ? setAddress(userData.address) : null;
-      residenceState == "" ? setResidenceState(userData.state) : null;
+      contact == "" ? setContact(userData.contact) : "";
+      address == "" ? setAddress(userData.address) : "";
+      residenceState == "" ? setResidenceState(userData.state) : "";
     };
     autoFillForm();
     return () => autoFillForm();
   }, [userData]);
 
   return (
-    <div className="flex flex-col py-10 px-2">
-      <div className="relative">
-        <div className="text-center text-3xl font-thin">Personal Profile</div>
-        <div className="text-center font-semibold text-4xl">
+    <div className="flex flex-col py-10 px-2 relative">
+      <div className=" mt-2 lg:mt-0">
+        <div className="text-center text-5xl font-semibold p-2">Personal Profile</div>
+        <div className="text-center font-thin text-4xl capitalize p-2">
           Welcome {fname}
         </div>
         <button
-          className="absolute top-0 md:top-9 right-0 lg:right-56 mr-3 bg-red-700 hover:bg-red-800 text-white rounded-lg p-2"
+          className="absolute top-0 md:top-[16vh] right-0 lg:right-60 mr-1 lg:mr-[7vw] bg-red-700 hover:bg-red-800 text-white text-lg rounded-lg lg:rounded-xl py-3 lg:py-4 px-3 lg:px-5 shadow-md border border-pink-400 font-semibold font-mono"
           onClick={handleLogout}
         >
-          LogOut
+          Logout
         </button>
       </div>
-      <div className="border-4 max-w-4xl container mx-auto my-10 bg-gray-100">
+      <div className="border-4 max-w-4xl container mx-auto my-10 ">
         {/* Navigation Tabs */}
-        <ul className="flex items-center h-12 bg-gray-600 text-white font-normal text-sm rounded-sm">
+        <ul className="flex flex-wrap items-center h-16 bg-gray-600 text-white font-normal text-xl">
           <li
-            className="pr-2 h-12 hover:bg-gray-700 "
-            style={{ backgroundColor: tab.profile ? "#374151" : "#4B5563" }}
+            className="pr-2 h-16 w-1/3 hover:bg-gray-700 "
+            style={{ backgroundColor: tab.profile ? "#374156" : "#4B5563" }}
           >
             <button
-              className="py-2 px-4 h-12"
+              className="py-2 px-4 h-16 w-full"
               onClick={() => displayTab("profile")}
             >
               Profile
             </button>
           </li>
           <li
-            className="pr-2 h-12 hover:bg-gray-700"
-            style={{ backgroundColor: tab.history ? "#374151" : "#4B5563" }}
+            className="pr-2 h-16 w-1/3 hover:bg-gray-700"
+            style={{ backgroundColor: tab.history ? "#374156" : "#4B5563" }}
           >
             <button
-              className="py-2 px-4 h-12"
+              className="py-2 px-4 h-16 w-full"
               onClick={() => displayTab("history")}
             >
               Purchase history
             </button>
           </li>
           <li
-            className="pr-2 h-12 hover:bg-gray-700"
-            style={{ backgroundColor: tab.cartSummary ? "#374151" : "#4B5563" }}
+            className="pr-2 h-16 w-1/3 hover:bg-gray-700"
+            style={{ backgroundColor: tab.cartSummary ? "#374156" : "#4B5563" }}
           >
             <button
-              className="py-2 px-4 h-12"
+              className="py-2 px-4 h-16 w-full"
               onClick={() => displayTab("cartSummary")}
             >
               Cart Summary
@@ -121,14 +125,14 @@ const Dashboard = ({ userData }) => {
           </li>
         </ul>
         {/* Tab Content */}
-        <div className="p-4 bg-white shadow">
+        <div className="p-4 pt-6 bg-white mx-1">
           {/* Home Tab Content */}
           <div className="tab-content">
             {tab.profile && (
               <div className="delay-300">
-                <form className="mx-auto p-2 bg-white shadow-md rounded-md">
-                  <div className="text-red-500 text-sm mb-1">
-                    All fields with * are required!
+                <form className="mx-auto p-2 bg-white rounded-md text-lg">
+                  <div className="text-red-500 text-sm mb-1 font-semibold font-mono">
+                    {error ? error : 'All fields with * are required!'}
                   </div>
                   <div className=" block text-gray-700 border mx-auto mb-5"></div>
                   <div className="mb-4">
@@ -136,7 +140,7 @@ const Dashboard = ({ userData }) => {
                       First Name *
                     </label>
                     <input
-                      className="border rounded w-full px-3 py-1"
+                      className="border w-full px-3 py-2 focus:text-xl rounded-lg"
                       type="text"
                       placeholder="John"
                       onChange={(e) => {
@@ -150,7 +154,7 @@ const Dashboard = ({ userData }) => {
                       Middle Name
                     </label>
                     <input
-                      className="border rounded w-full py-1 px-3"
+                      className="border rounded-lg w-full py-2 focus:text-xl px-3"
                       type="text"
                       placeholder="Doe"
                       onChange={(e) => {
@@ -164,7 +168,7 @@ const Dashboard = ({ userData }) => {
                       Last name *
                     </label>
                     <input
-                      className="border rounded w-full py-1 px-2"
+                      className="border rounded-lg w-full py-2 focus:text-xl px-2"
                       type="text"
                       placeholder="Smith"
                       onChange={(e) => {
@@ -178,7 +182,7 @@ const Dashboard = ({ userData }) => {
                       Phone Number *
                     </label>
                     <input
-                      className="border rounded w-full py-1 px-3"
+                      className="border rounded-lg w-full py-2 focus:text-xl px-3"
                       type="tel"
                       placeholder="555-555-5555"
                       onChange={(e) => {
@@ -192,7 +196,7 @@ const Dashboard = ({ userData }) => {
                       Address *
                     </label>
                     <input
-                      className="border rounded w-full py-1 px-3"
+                      className="border rounded-lg w-full py-2 focus:text-xl px-3"
                       type="text"
                       placeholder="123 Main Street"
                       onChange={(e) => {
@@ -206,7 +210,7 @@ const Dashboard = ({ userData }) => {
                       State *
                     </label>
                     <input
-                      className="border rounded w-full py-1 px-3"
+                      className="border rounded-lg w-full py-2 focus:text-xl px-3"
                       type="text"
                       placeholder="123 Main Street"
                       onChange={(e) => {
@@ -219,35 +223,33 @@ const Dashboard = ({ userData }) => {
               </div>
             )}
             {tab.history && (
-              <div className="delay-300">
-                You have no purchase history at the moment
-                <br></br>
-                You can order right now.
+              <div className="text-lg pl-1 min-h-[20vh] pt-10">
+                <h1 className="">You have no purchase history at the moment</h1>
               </div>
             )}
             {tab.cartSummary && (
-              <div>
-                No items added to cart presently.
-                <br></br>
-                Order a delicioud shawarma now.
+              <div className="text-lg pl-1 pt-10 min-h-[20vh]">
+                <h1>No items added to cart presently.</h1>
               </div>
             )}
           </div>
         </div>
         {tab.profile ? (
           <button
-            className=" bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 ml-20px"
+            className="bg-green-700 hover:bg-green-800 text-white rounded-lg px-6 py-4 ml-20px font-bold text-lg font-mono m-1"
             onClick={submitForm}
           >
             Submit
           </button>
         ) : tab.history || tab.cartSummary ? (
-          <Link
-            href={"/products"}
-            className=" bg-green-500 hover:bg-green-600 text-white rounded-lg p-2 ml-0"
-          >
-            Order Now
-          </Link>
+          <button className="bg-green-700 hover:bg-green-800 text-white rounded-lg px-6 py-4 ml-20px font-bold text-lg font-mono mb-1">
+            <Link
+              href={"/products"}
+              className=""
+            >
+              Order Now
+            </Link>
+          </button>
         ) : null}
       </div>
     </div>
@@ -258,7 +260,6 @@ export const getServerSideProps = async (context) => {
   const loginCookie = context.req?.cookies || "";
   const tokenString = loginCookie.token;
   let uid = "";
-
   if (!tokenString) {
     return {
       redirect: {
@@ -267,24 +268,36 @@ export const getServerSideProps = async (context) => {
       },
     };
   }
-
   if (tokenString) {
-    const token = JSON.parse(tokenString);
-    uid = token.user.userId;
     try {
+      const token = JSON.parse(tokenString);
+      if (!token) {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
+      uid = token.user.userId;
       const userData = await getUserById("users", uid);
-      return {
-        props: {
-          userData,
-        },
-      };
+      if(!uid) {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false
+          },
+        }
+      }
+      if (userData){
+        return {
+          props: {
+            userData,
+          },
+        };
+      }
     } catch (error) {
       console.error(error);
-      return {
-        props: {
-          userData: [],
-        },
-      };
     }
   }
 

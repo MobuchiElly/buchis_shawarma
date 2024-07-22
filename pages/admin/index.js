@@ -8,7 +8,10 @@ import { useRouter } from "next/router";
 import { db } from "../../authentication/firebase-config";
 import cookie from "js-cookie";
 import { getAllAdminUsers, getAllUsers } from "@/HOFunctions/dbFunctions";
-import EditModal from "@/components/EditModal";
+import EditModal from "@/components/modals/EditModal";
+import AddShawarmaBtn from "@/components/AddShawarmaBtn";
+import AddModal from "@/components/modals/AddModal";
+import EditProductModal from "@/components/modals/EditProductModal";
 
 const Index = ({ orders, products, users, adminUsers }) => {
   const [productsList, setProductsList] = useState(products);
@@ -16,6 +19,8 @@ const Index = ({ orders, products, users, adminUsers }) => {
   const [allUsers, setAllUsers] = useState(users);
   const [adminList, setAdminList] = useState(adminUsers);
   const [openModal, setOpenModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(false);
+  const [editedProduct, setEditedProduct] = useState(null);
   const [userDetail, setUserDetail] = useState(null);
   const status = ["preparing", "on the way", "delivered"];
   const auth = getAuth();
@@ -26,10 +31,11 @@ const Index = ({ orders, products, users, adminUsers }) => {
     users: false,
     admins: false,
   });
+  const [open, setOpen] = useState(false);
 
   const handleLogout = async () => {
     await signOut(auth);
-    //cookie.remove(token);
+    cookie.remove(token);
     router.push("/admin/login");
   };
 
@@ -44,11 +50,15 @@ const Index = ({ orders, products, users, adminUsers }) => {
     }
   };
 
-  const handleEdit = async (productId) => {
+  const handleEdit = async (productId) => {    
+    const product = productsList.find((product) => product._id === productId);
+    product ? setEditedProduct(product) : null;
+    setEditingProduct(true)
+    //editedProduct ? setEditingProduct(true) : null;
     try {
-      const res = await axios.put(
-        `${process.env.ENDPOINT_URL}/api/products/${productId}/`
-      );
+      // const res = await axios.put(
+      //   `${process.env.ENDPOINT_URL}/api/products/${productId}/`
+      // );
       setProductsList(
         productsList.filter((product) =>
           product._id === productId ? res.data : product
@@ -58,7 +68,8 @@ const Index = ({ orders, products, users, adminUsers }) => {
       console.log(error);
     }
   };
-
+  
+console.log("edited product",editedProduct);
   const handleStatus = async (id) => {
     const currentOrder = ordersList.filter((order) => order._id === id)[0];
     const currentStatus = currentOrder.status;
@@ -96,7 +107,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="flex flex-col py-10 px-2">
         <div className="relative">
           <div className="text-center font-semibold text-4xl mt-1 lg:mt-0">
@@ -111,9 +122,9 @@ const Index = ({ orders, products, users, adminUsers }) => {
         </div>
         <div className="border-4 max-w-4xl container mx-auto my-6 lg:my-10 bg-gray-100">
           {/* Navigation Tabs */}
-          <ul className="flex items-center h-12 bg-gray-600 text-white font-normal text-sm rounded-sm ">
+          <ul className="flex justify-around items-center h-12 bg-gray-600 text-white font-normal text-sm rounded-sm ">
             <li
-              className="pr-2 h-12 hover:bg-gray-700"
+              className="h-12 hover:bg-gray-700"
               style={{ backgroundColor: tab.products ? "#374151" : "#4B5563" }}
             >
               <button
@@ -158,7 +169,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
             </li>
           </ul>
           {/* Tab Content */}
-          <div className="p-4 bg-white shadow">
+          <div className="relative p-4 bg-white shadow">
             {/* Home Tab Content */}
             <div className="tab-content delay-200 pl-2 md:pl-4 ">
               {tab.products && (
@@ -166,6 +177,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                   <h1 className="text-3xl font-bold mb-4 text-center">
                     Manage Products
                   </h1>
+                  <AddShawarmaBtn setOpen={setOpen} />
                   <table className="w-full border-spacing-2 text-left ">
                     <tbody className="">
                       <tr className="">
@@ -193,14 +205,14 @@ const Index = ({ orders, products, users, adminUsers }) => {
                           <td>{product.prices[0]}</td>
                           <td className="flex">
                             <button
-                              className="p-2 px-3 pointer border-none text-white bg-teal mr-4 lg:mr-7"
+                              className="p-2 px-3 pointer border-none text-white bg-teal hover:bg-teal-700 font-semibold mr-4 lg:mr-7 shadow-md rounded"
                               onClick={() => handleEdit(product._id)}
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => handleDelete(product._id)}
-                              className="p-2 pointer border-none text-white bg-crimson-800"
+                              className="p-2 pointer border-none text-white font-semibold rounded bg-crimson-800 hover:bg-crimson-900"
                             >
                               Delete
                             </button>
@@ -209,6 +221,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                       </tbody>
                     ))}
                   </table>
+                  {open && <AddModal setOpen={setOpen} />}
                 </div>
               )}
               {tab.orders && (
@@ -301,7 +314,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
                               onClick={() =>
                                 handleUser({
                                   userId: user.id,
-                                  isAdmin: user.isAdmin || null,
+                                  isAdmin: user.isAdmin,
                                 })
                               }
                             >
@@ -374,16 +387,28 @@ const Index = ({ orders, products, users, adminUsers }) => {
       {openModal && (
         <EditModal userDetail={userDetail} closeModal={closeModal} />
       )}
+      {
+        editingProduct && 
+        <EditProductModal product={editedProduct} closeModal={() => setEditingProduct(false)}/>
+      }
     </div>
   );
 };
 
 export const getServerSideProps = async (context) => {
   const loginCookie = context.req?.cookies;
-  const tokenString = loginCookie.token;
-
+  
+  try {
+    const tokenString = loginCookie.token;
+    if(!tokenString){
+      return {
+        redirect: {
+          destination: "/admin/login",
+          permanent: false,
+        }
+      }
+    }
   const token = tokenString ? JSON.parse(tokenString) : null;
-
   if (!token || !token.user.userToken || !token.isAdmin) {
     return {
       redirect: {
@@ -391,16 +416,17 @@ export const getServerSideProps = async (context) => {
         permanent: false,
       },
     };
-  }
-
-  try {
+  }; 
+    const admin = token.isAdmin;
+    //Fetch orders
     const orderRes = await axios.get(`${process.env.ENDPOINT_URL}/api/orders`);
+    //Fetch products
     const productRes = await axios.get(
       `${process.env.ENDPOINT_URL}/api/products`
     );
+    //Fetch users
     const users = await getAllUsers(db, "users");
     const adminUsers = await getAllAdminUsers(db, "users");
-
     return {
       props: {
         orders: orderRes.data,
@@ -410,7 +436,7 @@ export const getServerSideProps = async (context) => {
       },
     };
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("An error occurred:", error);
     return {
       props: {
         orders: [],

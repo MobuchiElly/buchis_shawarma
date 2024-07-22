@@ -6,7 +6,7 @@ import Featured from "@/components/Featured";
 import ProductList from "@/components/ProductList";
 import { useState, useEffect } from "react";
 import AddShawarmaBtn from "@/components/AddShawarmaBtn";
-import AddModal from "@/components/AddModal";
+import AddModal from "@/components/modals/AddModal";
 import useBodyScroll from "@/components/hooks";
 
 const Index = ({ shawarmaList }) => {

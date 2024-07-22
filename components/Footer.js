@@ -4,11 +4,11 @@ import Image from 'next/image';
 const Footer = () => {
   
   return (
-    <div className='h-auto text-motto-color container-fluid min-h-screen bg-gray-900 flex bottom-0 text-my text-center'>
+    <div className='h-auto text-motto-color min-h-screen bg-gray-900 flex bottom-0 text-my text-center'>
       <div className='md:flex flex-1 relative hidden' >
         <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>
-      <div className='flex flex-col px-1 py-50 md:p-50 md:flex-row md:flex-2 md:relative md:justify-between'>
+      <div className='flex flex-col px-1 py-50 md:p-50 md:flex-row md:flex-2 w-full md:relative md:justify-between'>
         <div className='md:flex-1 mb-14 md:mb-0 px-20'>
           <h2 className='text-motto-color text-xl'>The perfect spot for you and your loved ones!!!</h2>
           <h2 className='text-motto-color text-xl'>Make every bite a blissfull experience.</h2>

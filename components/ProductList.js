@@ -18,7 +18,7 @@ const ProductList = ({ shawarmaList }) => {
         of fresh toppings and sauces, creating a personalized culinary
         experience.
       </p>
-      <div className="container flex justify-center flex-wrap lg:flex-nowrap p-2">
+      <div className="flex justify-center flex-wrap lg:flex-nowrap p-2">
         {shawarmaList.map((val) => (
           <div className=" bg-slate-50 m-1 rounded-md" key={val._id}>
             <ShawarmaCard shawarma={val} />

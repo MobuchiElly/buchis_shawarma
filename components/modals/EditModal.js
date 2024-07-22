@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { addAdmin, removeAdmin } from "../HOFunctions/dbFunctions";
+import { addAdmin, removeAdmin } from "../../HOFunctions/dbFunctions";
 
 export const EditModal = ({ userDetail, closeModal }) => {
   const [accountType, setAccountType] = useState("");
@@ -33,8 +33,8 @@ export const EditModal = ({ userDetail, closeModal }) => {
 
   return (
     <div
-      className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-gray-100 backdrop-filter backdrop-blur-sm "
-      style={{ zIndex: 999, overflow: "hidden" }}
+      className="fixed inset-0 w-screen flex items-center justify-center bg-gray-700 bg-opacity-50 backdrop-blur-sm z-50"
+      style={{overflow: "hidden" }}
     >
       <form
         onSubmit={(e) => handleUpdate(e)}
@@ -54,7 +54,7 @@ export const EditModal = ({ userDetail, closeModal }) => {
             id="accountType"
             value={accountType}
             onChange={(e) => setAccountType(e.target.value)}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-100"
             required
           >
             <option value="user">User</option>
@@ -73,7 +73,7 @@ export const EditModal = ({ userDetail, closeModal }) => {
             id="lockAccount"
             value={lockAccount}
             onChange={(e) => setLockAccount(e.target.value)}
-            className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            className="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-100"
             required
           >
             <option value="no">No</option>

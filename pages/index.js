@@ -1,29 +1,44 @@
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
-import Head from "next/head";
 import Featured from "@/components/Featured";
 import ShawarmaList from "@/components/ShawarmaList";
 import { useState, useEffect } from "react";
-import AddShawarmaBtn from "@/components/AddShawarmaBtn";
-import AddModal from "@/components/AddModal";
-import useBodyScroll from "@/components/hooks";
+import Pagination from "@/components/Pagination";
 
-const Index = ({ shawarmaList, admin }) => {
+const Index = ({ shawarmaList }) => {
+  const [shawarmalist, setshawarmalist] = useState(shawarmaList?.slice(0, 12));
   const [closeModal, setCloseModal] = useState(true);
-  const [mscroll, hideScroll, showScroll] = useBodyScroll();
   const [isActive, setIsActive] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [activePage, setactivePage] = useState(1);
+  
+  const handlePagination = () => {
+    if (activePage === 1){
+      setshawarmalist(shawarmaList.slice(0, 12));
+    } else if(activePage === 2){
+      setshawarmalist(shawarmaList.slice(12));
+    }
+  }
+
+  useEffect(() => {
+    if(shawarmaList.length){
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [shawarmaList]);
+  useEffect(() => {
+    handlePagination();
+  }, [activePage]);
   return (
-    <div >
+    <div>
       <title>Shawarma Restaurant in Lagos</title>
-      <meta name="description" content="Best Shawarma shop in town" />
+      <meta name="description" content="Best Shawarma online store in Lagos" />
       <Link rel="icon" href="/faviconbuchi.ico" />
-      <Featured shawarmaList={shawarmaList} />
-      {admin && (
-        <AddShawarmaBtn hideScroll={hideScroll} setCloseModal={setCloseModal} />
-      )}
-      <ShawarmaList shawarmaList={shawarmaList} />
-      {!closeModal && <AddModal setCloseModal={setCloseModal} />}
+      <Featured shawarmaList={shawarmalist} />
+      <ShawarmaList shawarmaList={shawarmalist} loading={loading}/>
+      <Pagination handlePagination={handlePagination} activePage={activePage} setactivePage={setactivePage}/>
     </div>
   );
 };
@@ -31,21 +46,12 @@ const Index = ({ shawarmaList, admin }) => {
 export default Index;
 
 export const getServerSideProps = async (context) => {
-  const loginCookie = context.req?.cookies || "";
-  let admin = false;
-  const tokenString = loginCookie.token;
-
-  if (tokenString) {
-    const token = JSON.parse(loginCookie.token);
-    admin = token.userToken && token.isAdmin ? true : false;
-  }
-  try {
+  try{
     const res = await axios.get(`${process.env.ENDPOINT_URL}/api/products`);
     const data = (await res.data) || [];
     return {
       props: {
-        shawarmaList: data,
-        admin,
+        shawarmaList: data
       },
     };
   } catch (err) {

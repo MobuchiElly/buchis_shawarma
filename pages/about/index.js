@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import {redirect} from 'next/navigation';
+import { redirect } from "next/navigation";
 
 const About = () => {
   return (
@@ -22,8 +22,11 @@ const About = () => {
               className="mx-auto border-none"
             />
           </div>
-          <div className="w-full md:w-1/2 md:ml-8 border-2 border-black">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Who we are</h1>
+          {/* right div after image */}
+          <div className="w-full md:w-1/2 md:ml-8 border-2 border-black px-1">
+            <h1 className="text-3xl md:text-3xl font-semibold mb-3 text-center">
+              Who we are
+            </h1>
             <p className="text-lg mb-6">
               Buchis Shawarma is a family-owned business dedicated to serving
               delicious shawarma made with the finest ingredients.
@@ -47,26 +50,13 @@ const About = () => {
             </button>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row items-center justify-center border-2 border-green-500">
+
+        {/* Lower text div */}
+        <div className="border-2 border-green-500 w-full mt-5">
           <div className="border border-black">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Our Values</h1>
-            <p className="text-lg mb-6">
-              Buchis Shawarma is a family-owned business dedicated to serving
-              delicious shawarma made with the finest ingredients.
-            </p>
-            <p className="text-lg mb-6">
-              Our mission is to provide a memorable dining experience for our
-              customers, offering a wide range of flavors and options to suit
-              every palate.
-            </p>
-            <p className="text-lg mb-6">
-              At Buchis Shawarma, we believe in quality, consistency, and
-              exceptional customer service. Join us today and taste the
-              difference!
-            </p>
-          </div>
-          <div className="border border-black">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Our Goals</h1>
+            <h1 className="text-3xl md:text-3xl font-semibold mb-3 text-center">
+              Our Values
+            </h1>
             <p className="text-lg mb-6">
               Buchis Shawarma is a family-owned business dedicated to serving
               delicious shawarma made with the finest ingredients.
@@ -91,10 +81,13 @@ const About = () => {
 export default About;
 
 export const getServerSideProps = () => {
+  // return {
+  //   redirect: {
+  //     destination: "/about/upgrade",
+  //     permanent: false,
+  //   },
+  // };
   return {
-    redirect: {
-      destination: "/about/upgrade",
-      permanent: false,
-    },
+    props: {},
   };
 };

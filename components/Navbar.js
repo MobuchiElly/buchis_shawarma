@@ -3,10 +3,15 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import MobileNav from "../components/MobileNav";
+import { FadeLoader } from "react-spinners";
+import {useState, useEffect} from "react";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
+  const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
   const content = {
     contact: {
       line1: "buchidevv@gmail.com",
@@ -14,8 +19,25 @@ const Navbar = () => {
     },
   };
 
+  const handleRouteChangeStart = () => {
+    setLoading(true);
+  }
+  const handleRouteChangeComplete = () => {
+    setLoading(false);
+  }
+  useEffect(() => {
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
+    }
+  }, [router.events])
+  
+
   return (
-    <div className="flex justify-between items-center md:p-x-15 pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m100 z-50">
+    <div className="flex justify-between items-center md:p-x-15 pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
       <div className="md:hidden absolute top-[-16px]">
         <Image src="/img/buchislogo.png" alt="logo" width="110" height="80" />
         <span className="text-white absolute top-16 left-4 italic text-sm font-light mt-1">
@@ -43,11 +65,10 @@ const Navbar = () => {
           <Link href="/">
             <li className="font-my500 cursor-pointer m-5">Home</li>
           </Link>
-          <Link href="/products">
+          {/* <Link href="/products">
             <li className="font-my500 cursor-pointer m-5">Products</li>
-          </Link>
+          </Link> */}
           <Image src="/img/buchislogo.png" alt="logo" width="160" height="80" />
-          <li className="font-my500 cursor-pointer m-5">About</li>
           <Link href="/contact-us">
             <li className="font-my500 cursor-pointer m-5 relative">Contact</li>
           </Link>
@@ -56,7 +77,7 @@ const Navbar = () => {
 
       <div className="flex-1 flex justify-end items-center relative">
         <div className=" hidden lg:inline-flex text-white font-my500 cursor-pointer pr-6 mr-6">
-          <Link href="/account" className="bg-red-400 p-2 rounded-lg">
+          <Link href="/account" className="bg-red-400 p-3 rounded-lg font-bold">
             My Account
           </Link>
         </div>
@@ -74,6 +95,11 @@ const Navbar = () => {
         </Link>
       </div>
       <MobileNav />
+      {
+        loading && <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-40">
+        <FadeLoader size={20}/>
+      </div>
+      }
     </div>
   );
 };

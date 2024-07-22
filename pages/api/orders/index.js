@@ -3,7 +3,7 @@ import Order from "@/models/Order";
 
 const handler = async (req, res) => {
     const { method } = req;
-
+    console.log(req.body);
     await dbConnect();
 
     if(method === "GET"){

@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { firebaseApp, db } from "@/authentication/firebase-config";
 import { addUserToDb } from "@/HOFunctions/dbFunctions";
+import FadeLoader from "react-spinners/FadeLoader";
 
 const Login = ({ user }) => {
   const [fname, setFName] = useState(null);
@@ -16,6 +17,7 @@ const Login = ({ user }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isUser, setIsUser] = useState(true);
   const router = useRouter();
   const auth = getAuth(firebaseApp);
@@ -31,24 +33,25 @@ const Login = ({ user }) => {
     }
   });
   const handleSignIn = async () => {
-    if (email && password) {
-      try {
-        const userCred = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCred.user;
-        if (user) {
-          router.push("/account");
-        }
-      } catch (error) {
-        console.error("Error in credentials");
-        setError("Incorrect credentials");
-      }
-    } else {
-      setError("Wrong Credentials");
+    if (!email && !password) {
+      setError("Email and password are required");
+      return;
     }
+    setLoading(true);
+    try {
+      const userCred = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCred.user;
+      if (user) {
+        router.push("/account");
+      }
+    } catch (error) {
+      error.code == "auth/network-request-failed" ? setError("Please check your internet conection") : error.code == "auth/invalid-credential" ? setError("Invalid Credentials") : setError("Please try again");
+    }
+    setLoading(false);
   };
 
   const handleSignUp = async () => {
@@ -78,23 +81,23 @@ const Login = ({ user }) => {
   };
 
   return (
-    <div className="bg-slate-200 flex justify-center items-center" style={{height:'calc(100vh - 100px)'}}>
-      <div className="flex flex-col border-2 border-slate-300 w-auto h-auto px-5 py-8 rounded-xl justify-center mb-10 md:mb-6">
+    <div className="bg-slate-50 flex justify-center lg:items-center mt-[8vh] lg:mt-0" style={{height:'calc(100vh - 130px)'}}>
+      <div className="flex flex-col border-2 border-slate-300 mx-4 md:mx-0 w-auto lg:w-[32vw] h-[55vh] px-5 py-8 rounded-xl justify-center md:mb-6 bg-slate-100 mt-2">
         {isUser && (
-          <h1 className="font-bold text-3xl text-center mb-4">Account Login</h1>
+          <h1 className="font-bold text-3xl text-center mb-6">Login</h1>
         )}
         {!isUser && (
-          <h1 className="font-bold text-center text-3xl mb-4">Register Now</h1>
+          <h1 className="font-bold text-center text-3xl mb-6">Create Your Account</h1>
         )}
         {!isUser && (
-          <div className="md:flex mb-3 md:mb-5 md:justify-between md:item-center">
+          <div className="md:flex mb-3 md:mb-5 md:justify-between md:item-center gap-2">
             <input
               placeholder="John"
               onChange={(e) => {
                 setFName(e.target.value);
                 setError(null);
               }}
-              className="h-8 px-3 py-1 rounded-md w-100% md:w-50% mb-3 md:mb-0 bg-transparent"
+              className="px-3 py-2 rounded-lg w-100% md:w-50% mb-3 md:mb-0 bg-transparent text-lg focus:text-xl"
             />
             <input
               placeholder="Albert"
@@ -102,7 +105,7 @@ const Login = ({ user }) => {
                 setLName(e.target.value);
                 setError(null);
               }}
-              className="h-8 px-3 py-1 rounded-md w-full md:w-50% bg-transparent"
+              className="px-3 py-2 rounded-lg w-full md:w-50% bg-transparent text-lg focus:text-xl"
             />
           </div>
         )}
@@ -112,7 +115,7 @@ const Login = ({ user }) => {
             setEmail(e.target.value);
             setError(null);
           }}
-          className="h-8 mb-3 md:mb-5 px-3 py-1 rounded-md bg-transparent"
+          className="mb-3 md:mb-5 px-3 py-2 rounded-md bg-transparent text-lg focus:text-xl"
         />
         <input
           type="password"
@@ -121,11 +124,11 @@ const Login = ({ user }) => {
             setPassword(e.target.value);
             setError(null);
           }}
-          className="h-8 mb-8 px-3 py-1 rounded-md bg-transparent"
+          className="mb-8 px-3 py-2 rounded-md bg-transparent text-lg focus:text-xl"
         />
         {isUser && (
           <button
-            className="h-8 mb-4 border-none bg-green-400 hover:bg-green-500 p-1 delay-100 text-white font-bold pointer rounded-md text-center"
+            className="py-4 mb-4 border-none bg-green-600 hover:bg-green-700 p-1 delay-100 text-white font-bold pointer rounded-md text-center"
             onClick={handleSignIn}
           >
             Sign In
@@ -133,26 +136,25 @@ const Login = ({ user }) => {
         )}
         {!isUser && (
           <button
-            className="h-8 mb-4 p-1 border-none bg-green-500 hover:bg-green-600 focus:outline-none focus:shadow-lg text-white font-bold pointer rounded-md text-center"
+            className="mb-4 p-1 py-4 border-none bg-green-600 hover:bg-green-700 focus:outline-none focus:shadow-lg text-white font-bold pointer rounded-xl text-center"
             onClick={handleSignUp}
           >
             Sign Up
           </button>
         )}
-
         <div className="relative">
           {isUser && (
-            <div>
+            <div className="text-center">
               Don&#39;t have an account?{" "}
-              <button onClick={handleToggle} className="font-medium">
+              <button onClick={handleToggle} className="font-medium text-lg">
                 Register now
               </button>
             </div>
           )}
           {!isUser && (
-            <div>
+            <div className="text-center">
               I already have an account!{" "}
-              <button onClick={handleToggle} className="font-medium">
+              <button onClick={handleToggle} className="font-medium text-lg">
                 Login here
               </button>
             </div>
@@ -164,6 +166,12 @@ const Login = ({ user }) => {
           )}
         </div>
       </div>
+      {
+        loading && 
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-20">
+          <FadeLoader size={20}/>
+        </div>
+      }
     </div>
   );
 };
