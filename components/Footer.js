@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Footer = () => {
   
   return (
-    <div className='h-auto text-motto-color min-h-screen bg-gray-900 flex bottom-0 text-my text-center'>
+    <div className='h-auto text-motto-color min-h-screen bg-gray-900 flex bottom-0 text-my text-center z-40'>
       <div className='md:flex flex-1 relative hidden' >
         <Image src="/img/bg.png" fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1500px) 100vw, 33vw" alt='telephone image' />
       </div>

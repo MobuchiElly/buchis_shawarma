@@ -38,7 +38,7 @@ const Index = ({ shawarmaList }) => {
       <Link rel="icon" href="/faviconbuchi.ico" />
       <Featured shawarmaList={shawarmalist} />
       <ShawarmaList shawarmaList={shawarmalist} loading={loading}/>
-      <Pagination handlePagination={handlePagination} activePage={activePage} setactivePage={setactivePage}/>
+      {shawarmalist && shawarmalist.length && <Pagination handlePagination={handlePagination} activePage={activePage} setactivePage={setactivePage}/>}
     </div>
   );
 };
