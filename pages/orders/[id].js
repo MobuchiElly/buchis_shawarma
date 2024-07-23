@@ -14,10 +14,10 @@ const Order = ({order}) => {
             return styles.notDone;
     }
   return (
-    <div className='p-50px flex flex-col lg:flex-row'> 
+    <div className='p-4 py-6 lg:px-14 lg:py-16 min-h-[80vh] flex flex-col lg:flex-row'> 
         <div className='flex-2'>
             <div className={styles.row}>
-            <table className='w-100% text-left mb-50px'>
+            <table className='w-100% text-left mb-9 lg:mb-50px'>
                     <thead>
                         <tr className='hidden lg:table-row'> 
                             <th>Order ID</th>
@@ -27,7 +27,7 @@ const Order = ({order}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr className='flex flex-col justify-center items-center text-20px lg:table-row'>
+                        <tr className='flex flex-col justify-center lg:items-center text-20px lg:table-row'>
                             <td>
                                 <span className={styles.id}>{order._id}</span>
                             </td>
@@ -44,7 +44,7 @@ const Order = ({order}) => {
                     </tbody>
             </table>
             </div>
-            <div className='w-100% flex flex-col items-center justify-center lg:w-92% lg:flex-row lg:justify-between'> 
+            <div className='w-100% flex space-x-5 pb-4 lg:space-x-40 px-1 lg:px-12 lg:pt-6'> 
                 <div className={renderui(0)}>
                     <Image src="/img/paid.png" width={30} height={30} alt=""/>
                     <span>Payment</span>
