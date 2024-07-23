@@ -111,136 +111,132 @@ const Cart = () => {
   };
 
   return (
-    <div className="p-20 flex flex-col lg:p-50px lg:flex-row">
-      <div className="flex-2">
-        {cart.quantity > 0 && (
-          <table
-            className="flex flex-col items-center justify-center lg:table w-100%"
-            style={{ borderSpacing: "20px" }}
-          >
-            <thead>
-              <tr className="hidden lg:table-row">
-                <th>Product</th>
-                <th>Name</th>
-                <th>Extras</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            {cart.products.map((product) => (
-              <tbody key={product._id}>
-                <tr
-                  className="flex flex-col items-center justify-center mb-4 lg:mb-0 lg:table-row"
-                  style={{ marginBottom: "20px" }}
-                >
-                  <td>
-                    <div className="h-35vw w-35vw lg:w-m100 lg:h-m100 relative">
-                      <Image
-                        src={product.img}
-                        layout="fill"
-                        objectFit="cover"
-                        alt=""
-                      className="lg:ml-30"/>
-                    </div>
-                  </td>
-                  <td className="text-center">
-                    <span className="w-full text-24px lg:text-18px text-main-color font-medium ">
-                      {product.title}
-                    </span>
-                  </td>
-                  <td className=" text-center">
-                    <span className={styles.extras}>
-                      {product.options.map((option) => (
-                        <span key={option._id}>{option.text}</span>
-                      ))}
-                    </span>
-                  </td>
-                  <td className=" text-center">
-                    <span className={styles.price}>₦{product.price}</span>
-                  </td>
-                  <td className=" text-center">
-                    <span className={styles.quantity}>{product.quantity}</span>
-                  </td>
-                  <td className="text-center">
-                    <span
-                      className={`${styles.total} text-21px lg:text-18px font-medium`}
-                    >
-                      ₦{product.price * product.quantity}
-                    </span>
-                  </td>
+    <div className="min-h-[70vh]">
+      { cart.quantity > 0 ?
+        (<div className="flex flex-col p-20 lg:p-50px lg:flex-row">
+        <div className="flex-2">
+            <table
+              className="flex flex-col items-center justify-center lg:table w-100%"
+              style={{ borderSpacing: "20px" }}
+            >
+              <thead>
+                <tr className="hidden lg:table-row">
+                  <th>Product</th>
+                  <th>Name</th>
+                  <th>Extras</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
                 </tr>
-              </tbody>
-            ))}
-          </table>
-        )}
-        {cart.quantity == 0 && (
-          <div>
-            <div className="p-2 text-center text-lg font-semibold mb-3  lg:mb-1">
-              You have no products added to cart presently. Want to place an
-              order?{" "}
-              <div className="mt-2 lg:mt-0 ml-0 inline-flex">
-                <Link
-                  href={"/products"}
-                  className="bg-slate-600 text-white rounded-lg p-2"
+              </thead>
+              {cart.products.map((product) => (
+                <tbody key={product._id}>
+                  <tr
+                    className="flex flex-col items-center justify-center mb-4 lg:mb-0 lg:table-row"
+                    style={{ marginBottom: "20px" }}
+                  >
+                    <td>
+                      <div className="h-35vw w-35vw lg:w-m100 lg:h-m100 relative">
+                        <Image
+                          src={product.img}
+                          layout="fill"
+                          objectFit="cover"
+                          alt=""
+                        className="lg:ml-30"/>
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      <span className="w-full text-24px lg:text-18px text-main-color font-medium ">
+                        {product.title}
+                      </span>
+                    </td>
+                    <td className=" text-center">
+                      <span className={styles.extras}>
+                        {product.options.map((option) => (
+                          <span key={option._id}>{option.text}</span>
+                        ))}
+                      </span>
+                    </td>
+                    <td className=" text-center">
+                      <span className={styles.price}>₦{product.price}</span>
+                    </td>
+                    <td className=" text-center">
+                      <span className={styles.quantity}>{product.quantity}</span>
+                    </td>
+                    <td className="text-center">
+                      <span
+                        className={`${styles.total} text-21px lg:text-18px font-medium`}
+                      >
+                        ₦{product.price * product.quantity}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
+            </table>
+        </div>
+        <div className="flex-1">
+          <div className="w-100% lg:w-90% bg-#333 p-50px pt-10px flex flex-col justify-between text-white max-h-300px">
+            <h2 className="font-bold text-lg">CART TOTAL</h2>
+            <div className={styles.totalText}>
+              <b className="">Subtotal:</b>₦{cart.total}
+            </div>
+            <div className={styles.totalText}>
+              <b className="">Discount:</b>₦0.00
+            </div>
+            <div className={styles.totalText}>
+              <b className="">Total:</b>₦{cart.total}
+            </div>
+            {showBtn && (
+              <div className="flex flex-col mt-1 z-10 relative">
+                <button
+                  className="sm:px-3 sm:py-4 lg:px-2 lg:py-1 pointer mb-5 bg-white text-teal-700 font-bold rounded italic text-lg"
+                  onClick={() => {
+                    setCash(true);
+                    hideScroll();
+                  }}
                 >
-                  Order Now
-                </Link>
+                  CASH ON DELIVERY
+                </button>
+                <PayPalScriptProvider
+                  options={{
+                    "client-id":
+                      process.env.NEXT_PUBLIC_PAYPALCLIENTID,
+                    components: "buttons",
+                    currency: "USD",
+                    "disable-funding": "credit,card,p24",
+                  }}
+                  className="absolute"
+                >
+                  <ButtonWrapper currency={currency} showSpinner={false} />
+                </PayPalScriptProvider>
+              </div>
+            )}
+            {!showBtn && (
+              <button
+                className={` bg-white rounded text-main-color cursor-pointer mt-20px h-30px font-bold`}
+                onClick={() => {
+                  if (cart.quantity <= 0) return;
+                  setShowbtn(true);
+                }}
+              >
+                CHECKOUT NOW!
+              </button>
+            )}
+          </div>
+        </div>
+        </div>) : (
+            <div className="lg:my-20">
+              <div className="flex justify-center">
+                <Image src="/img/emptyCart.png" height="300" width="300"/>
+              </div>
+              <div className="lg:text-center font-semibold font-serif">
+                <span className="block text-xl text-center">Ooops!!!</span>
+                <p className="mr-3 lg:inline-flex text-center">It appears you have no items added to cart presently</p>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-      <div className="flex-1">
-        <div className="w-100% lg:w-90% bg-#333 p-50px pt-10px flex flex-col justify-between text-white max-h-300px">
-          <h2 className="font-bold text-lg">CART TOTAL</h2>
-          <div className={styles.totalText}>
-            <b className="">Subtotal:</b>₦{cart.total}
-          </div>
-          <div className={styles.totalText}>
-            <b className="">Discount:</b>₦0.00
-          </div>
-          <div className={styles.totalText}>
-            <b className="">Total:</b>₦{cart.total}
-          </div>
-          {showBtn && (
-            <div className="flex flex-col mt-1 z-10 relative">
-              <button
-                className="sm:px-3 sm:py-4 lg:px-2 lg:py-1 pointer mb-5 bg-white text-teal-700 font-bold rounded italic text-lg"
-                onClick={() => {
-                  setCash(true);
-                  hideScroll();
-                }}
-              >
-                CASH ON DELIVERY
-              </button>
-              <PayPalScriptProvider
-                options={{
-                  "client-id":
-                    process.env.NEXT_PUBLIC_PAYPALCLIENTID,
-                  components: "buttons",
-                  currency: "USD",
-                  "disable-funding": "credit,card,p24",
-                }}
-                className="absolute"
-              >
-                <ButtonWrapper currency={currency} showSpinner={false} />
-              </PayPalScriptProvider>
-            </div>
-          )}
-          {!showBtn && (
-            <button
-              className={` bg-white rounded text-main-color cursor-pointer mt-20px h-30px font-bold`}
-              onClick={() => {
-                if (cart.quantity <= 0) return;
-                setShowbtn(true);
-              }}
-            >
-              CHECKOUT NOW!
-            </button>
-          )}
-        </div>
-      </div>
+        )
+      }
       {cash && (
         <OrderDetails
           closeForm={closeForm}
