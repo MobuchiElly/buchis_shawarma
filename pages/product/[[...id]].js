@@ -42,7 +42,7 @@ const Product = ({ shawarma }) => {
     <div className="h-auto lg:h-calc-screen-minus-100 space-y-4 pb-6 px-2">
         <div className="lg:mx-10 lg:w-[80vw] flex gap-2 lg:gap-10 text-center lg:text-justify mt-20px lg-mt-1">
           <div className='flex-1 h-100% flex flex-col space-y-2'>
-            <Image src={shawarma.img} width="600" height="400"/>
+            <Image src={shawarma.img} width="600" height="400" className="ml-1"/>
             <span className='lg:hidden text-main-color mx-10 text-24px font-400' style={{borderBottom:'1px solid #d1411e'}}>₦{price}</span>
           </div>
           <div className='flex-1 flex flex-col pt-4 lg:pt-10'>
