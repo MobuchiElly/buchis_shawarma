@@ -55,19 +55,19 @@ const Navbar = () => {
       </div>
 
       {/*Navbar Lists*/}
-      <div className="hidden lg:block relative" style={{ flex: 3 }}>
+      <div className="hidden lg:block" style={{ flex: 3 }}>
         <ul className="p-0 flex items-center justify-center list-none text-white">
           <Link href="/">
             <li className="font-my500 cursor-pointer m-5">Home</li>
           </Link>
           <Image src="/img/buchislogo.png" alt="logo" width="160" height="80" />
           <Link href="/contact-us">
-            <li className="font-my500 cursor-pointer m-5 relative">Contact</li>
+            <li className="font-my500 cursor-pointer m-5">Contact</li>
           </Link>
         </ul>
       </div>
 
-      <div className="flex-1 flex justify-end items-center relative">
+      <div className="flex-1 flex justify-end items-center">
         <div className=" hidden lg:inline-flex text-white font-my500 cursor-pointer pr-6 mr-6">
           <Link href="/account" className="bg-red-400 p-3 rounded-lg font-bold">
             My Account
