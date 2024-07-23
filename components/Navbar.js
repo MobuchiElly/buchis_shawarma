@@ -86,8 +86,8 @@ const Navbar = () => {
           <div className="last:justify-end mr-4 lg:mr-0">
             <Image src="/img/cart.png" alt="logo" width="30" height="30" />
             <div
-              className="absolute bg-white font-bold w-5 h-5 flex justify-center items-center rounded-full p3 text-main-color"
-              style={{ top: "-10px", left: "-10px" }}
+              className="absolute bg-white font-bold p-2 py-0 rounded-full p3 text-main-color"
+              style={{ top: "-10px", left: "-13px" }}
             >
               {quantity}
             </div>

@@ -65,7 +65,7 @@ const Contact = () => {
         <MessageModal content={content} handleModal={handleModal} />
       )}
       <div className="text-center p-2 mt-3">
-        <p className="text-gray-700 font-bold text-3xl mb-2">
+        <p className="text-gray-800 font-bold text-3xl mb-2">
           Support and Enquiries
         </p>
         <div className="bg-gray-400 h-1.7px w-64 mx-auto"></div>
@@ -126,7 +126,7 @@ const Contact = () => {
                   placeholder="Your Name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 p-3 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   required
                 />
               </div>
@@ -138,7 +138,7 @@ const Contact = () => {
                   placeholder="Your Email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 p-3 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   required
                 />
               </div>
@@ -151,7 +151,7 @@ const Contact = () => {
                 placeholder="Subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 p-3 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 required
               ></input>
             </div>
@@ -163,14 +163,14 @@ const Contact = () => {
                 placeholder="Message..."
                 onChange={handleChange}
                 rows={4}
-                className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 p-3 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 required
               ></textarea>
             </div>
             <div className="text-center lg:py-2">
               <button
                 type="submit"
-                className="bg-green-500 text-white px-1.5 py-3 lg:p-4 w-1/3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                className="bg-green-500 hover:bg-green-600 text-white w-full py-4 font-semibold hover:font-bold text-lg rounded-md hover:bg-green-600focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
               >
                 Send Message
               </button>
