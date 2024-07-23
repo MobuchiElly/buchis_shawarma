@@ -130,13 +130,13 @@ const Cart = () => {
                 </tr>
               </thead>
               {cart.products.map((product) => (
-                <tbody key={product._id} className="">
+                <tbody key={product._id} className=" w-full">
                   <tr
                     className="flex flex-col items-center justify-center mb-4 lg:mb-0 lg:table-row"
                     style={{ marginBottom: "20px" }}
                   >
-                    <td>
-                      <div className="h-35vw w-35vw lg:w-m100 lg:h-m100 relative">
+                    <td className="w-full lg:table-row">
+                      <div className="min-h-[35vh] w-full lg:w-m100 lg:h-m100 relative ">
                         <Image
                           src={product.img}
                           layout="fill"
