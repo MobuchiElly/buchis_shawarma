@@ -135,8 +135,8 @@ const Cart = () => {
                     className="flex flex-col items-center justify-center mb-4 lg:mb-0 lg:table-row"
                     style={{ marginBottom: "20px" }}
                   >
-                    <td className="w-full lg:table-row">
-                      <div className="min-h-[35vh] w-full lg:w-m100 lg:h-m100 relative ">
+                    <td className=" w-full lg:table-row">
+                      <div className="h-[35vh] w-full lg:w-m100 lg:h-m100 relative">
                         <Image
                           src={product.img}
                           layout="fill"
@@ -145,25 +145,25 @@ const Cart = () => {
                         className="lg:ml-30"/>
                       </div>
                     </td>
-                    <td className="text-center">
+                    <td className="lg:text-center pl-[14vw] lg:pl-0 w-full lg:w-auto">
                       <span className="w-full text-24px lg:text-18px text-main-color font-medium ">
                         {product.title}
                       </span>
                     </td>
-                    <td className=" text-center">
+                    <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                       <span className={styles.extras}>
                         {product.options.map((option) => (
                           <span key={option._id}>{option.text}</span>
                         ))}
                       </span>
                     </td>
-                    <td className=" text-center">
+                    <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                       <span className={styles.price}>₦{product.price}</span>
                     </td>
-                    <td className=" text-center">
+                    <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                       <span className={styles.quantity}>{product.quantity}</span>
                     </td>
-                    <td className="text-center">
+                    <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                       <span
                         className={`${styles.total} text-21px lg:text-18px font-medium`}
                       >
