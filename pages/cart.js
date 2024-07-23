@@ -175,7 +175,7 @@ const Cart = () => {
               ))}
             </table>
         </div>
-        <div className="flex-1">
+        <div className="flex-1 lg:mt-4">
           <div className="w-100% lg:w-90% bg-#333 px-10 py-7 flex flex-col justify-center text-white h-auto min-h-300px border">
             <h2 className="font-bold text-lg mb-2">CART TOTAL</h2>
             <div className="mb-1">
