@@ -3,7 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaArrowUp, FaArrowDown } from 'react-icons/f
 const Pagination = ({activePage, setactivePage, handlePagination}) => {
   return (
     <div className="min-h-10 py-6 px-24 flex flex-col">
-        <div className="border border-b-black h-1 w-full"></div>
+        <div className="border border-b-black h-1 w-full mb-1"></div>
         <div className="flex justify-center p-2 space-x-2">
             <div className={`shadow-md py-2 px-5 border border-black text-black text-lg cursor-pointer ${activePage === 1 ? "font-bold" : 'font-normal'}`} onClick={() => setactivePage(1)}>
                 1
