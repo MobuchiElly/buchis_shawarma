@@ -54,7 +54,7 @@ const MobileNav = ({quantity}) => {
         </div>
       </div>
       {navOpen && (
-        <ul className="lg:hidden w-full flex flex-col flex-grow list-none text-white absolute right-0 top-[21vh] bg-slate-50 px-2 h-auto ml-1vw rounded-sm shadow font-semibold" style={{borderTopRightRadius:'10px',borderBottomLeftRadius:'20px'}}>
+        <ul className="lg:hidden w-full flex flex-col flex-grow list-none text-white absolute right-0 top-[16vh] bg-slate-50 px-2 h-auto ml-1vw rounded-sm shadow font-semibold" style={{borderTopRightRadius:'10px',borderBottomLeftRadius:'20px'}}>
           <Link href="/" className="w-100%">
             <li
               className="text-slate-900 bold text-sm py-4 pl-2 w-100% text-left cursor-pointer border-b border-slate-300"

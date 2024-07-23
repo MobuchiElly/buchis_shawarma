@@ -37,7 +37,7 @@ const Navbar = () => {
   
 
   return (
-    <div className="flex justify-between items-center md:p-x-15 lg:pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
+    <div className="flex justify-between items-center md:p-x-15 lg:pr-4 md:px-4 bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
       
       <div className="hidden md:flex md:items-center lg:flex-3 flex-1">
         <div className="bg-white rounded-full p-2 w-my-50 h-my-50">
@@ -60,9 +60,6 @@ const Navbar = () => {
           <Link href="/">
             <li className="font-my500 cursor-pointer m-5">Home</li>
           </Link>
-          {/* <Link href="/products">
-            <li className="font-my500 cursor-pointer m-5">Products</li>
-          </Link> */}
           <Image src="/img/buchislogo.png" alt="logo" width="160" height="80" />
           <Link href="/contact-us">
             <li className="font-my500 cursor-pointer m-5 relative">Contact</li>
