@@ -10,29 +10,29 @@ const MobileNav = ({quantity}) => {
   };
 
   return (
-    <div className="lg:hidden w-full flex items-center h-full pr-4">
-      <div className="md:hidden w-3/5 relative">
-        <Image src="/img/buchislogo.png" alt="logo" width="110" height="70" className="pb-2"/>
+    <div className="lg:hidden w-full flex items-center h-full pr-6">
+      <div className="md:hidden w-3/5 relative h-full">
+        <Image src="/img/buchislogo.png" alt="logo" width="110" height="70" className=""/>
         <h1 className="text-white absolute top-16 left-4 italic text-sm font-light mt-1">
           Shawarma
         </h1>
       </div>
-      <div className="w-2/5 flex justify-end">
+      <div className="w-2/5 flex justify-end items-center">
         <Link href="/cart" className="mr-4">
             <Image src="/img/cart.png" alt="logo" width="30" height="30" />
-            <div className={`absolute bg-white font-bold p-2 py-0 rounded-full p3 text-main-color right-14 top-8 ${quantity > 0 ? "animate-pulse" : ""}`}
+            <div className={`absolute bg-white font-bold p-2 py-0 rounded-full p3 text-main-color right-16 top-8 ${quantity > 0 ? "animate-pulse" : ""}`}
             >
               {quantity}
             </div>
         </Link>
         <div className="w-8">
-          {!navOpen && (
+          {!navOpen ? (
             <button
               onClick={toggleNavbar}
               className="flex items-center p-2 border rounded text-white border-white hover:text-white hover:border-white lg:hidden cursor"
             >
               <svg
-                className="fill-current h-3 w-3"
+                className="fill-current h-5 w-6"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -43,10 +43,9 @@ const MobileNav = ({quantity}) => {
                 ></path>
               </svg>
             </button>
-          )}
-          {navOpen && (
+          ) : (
             <span
-              className="text-slate-100 font-semibold text-lg ml-2 mr-1 cursor-pointer"
+              className="text-slate-100 font-semibold text-lg pl-2 ml-2 mr-1 cursor-pointer"
               onClick={toggleNavbar}
             >
               X
