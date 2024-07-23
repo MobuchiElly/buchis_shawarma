@@ -11,9 +11,9 @@ const MobileNav = ({quantity}) => {
 
   return (
     <div className="lg:hidden w-full flex items-center h-full pr-6">
-      <div className="md:hidden w-3/5 relative h-full">
+      <div className="w-3/5 h-full">
         <Image src="/img/buchislogo.png" alt="logo" width="110" height="70" className=""/>
-        <h1 className="text-white absolute top-16 left-4 italic text-sm font-light mt-1">
+        <h1 className="text-white absolute top-16 left-4 italic text-sm font-light mt-1 pl-1">
           Shawarma
         </h1>
       </div>
