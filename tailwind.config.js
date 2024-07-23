@@ -141,6 +141,7 @@ module.exports = {
         '40px': '40px',
         '50px': '50px',
         '66px': '66px',
+        '68px': '80px',
         '70px': '70px',
       },
       'z-index': {

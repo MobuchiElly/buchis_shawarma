@@ -37,13 +37,8 @@ const Navbar = () => {
   
 
   return (
-    <div className="flex justify-between items-center md:p-x-15 pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
-      <div className="md:hidden absolute top-[-16px]">
-        <Image src="/img/buchislogo.png" alt="logo" width="110" height="80" />
-        <span className="text-white absolute top-16 left-4 italic text-sm font-light mt-1">
-          Shawarma
-        </span>
-      </div>
+    <div className="flex justify-between items-center md:p-x-15 lg:pr-4 md:px-4  bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
+      
       <div className="hidden md:flex md:items-center lg:flex-3 flex-1">
         <div className="bg-white rounded-full p-2 w-my-50 h-my-50">
           <Image
@@ -60,7 +55,7 @@ const Navbar = () => {
       </div>
 
       {/*Navbar Lists*/}
-      <div className=" hidden lg:block relative" style={{ flex: 3 }}>
+      <div className="hidden lg:block relative" style={{ flex: 3 }}>
         <ul className="p-0 flex items-center justify-center list-none text-white">
           <Link href="/">
             <li className="font-my500 cursor-pointer m-5">Home</li>
@@ -86,7 +81,7 @@ const Navbar = () => {
           <div className="last:justify-end mr-4 lg:mr-0">
             <Image src="/img/cart.png" alt="logo" width="30" height="30" />
             <div
-              className="absolute bg-white font-bold p-2 py-0 rounded-full p3 text-main-color"
+              className={`absolute bg-white font-bold p-2 py-0 rounded-full p3 text-main-color ${quantity > 0 ? "animate-pulse" : ""}`}
               style={{ top: "-10px", left: "-13px" }}
             >
               {quantity}
@@ -94,7 +89,7 @@ const Navbar = () => {
           </div>
         </Link>
       </div>
-      <MobileNav />
+      <MobileNav quantity={quantity}/>
       {
         loading && <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-40">
         <FadeLoader size={20}/>
