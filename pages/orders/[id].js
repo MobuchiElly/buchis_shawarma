@@ -98,7 +98,7 @@ const Order = ({order}) => {
         </div>
 
         <div className='flex-1'>
-            <div className={`${styles.wrapper} w-100% lg:w-90% bg-#333 text-white flex flex-col justify-between p-50px pt-10px max-h-300px`}>
+            <div className={`${styles.wrapper} w-100% lg:w-90% bg-#333 text-white flex flex-col justify-between p-[50px] py-8 max-h-300px`}>
                 <h2 className={`${styles.title} font-bold text-lg`}>CART TOTAL</h2>
                 <div className={styles.totalText}>
                     <b className='mr-10px'>Subtotal:</b>₦{order.totalprice}

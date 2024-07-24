@@ -5,6 +5,10 @@ import { useRouter } from "next/router";
 import { updateUser, getUserById, getAllUsers } from "@/HOFunctions/dbFunctions";
 import cookie from "js-cookie";
 import Link from "next/link";
+import { FaSignOutAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import styles from "../styles/Cart.module.css";
+import Image from "next/image";
 
 const Dashboard = ({ userData }) => {
   const [fname, setFname] = useState("");
@@ -20,6 +24,8 @@ const Dashboard = ({ userData }) => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const cart = useSelector(state => state.cart);
+  console.log(cart);
 
   const auth = getAuth(firebaseApp);
   const router = useRouter();
@@ -75,16 +81,14 @@ const Dashboard = ({ userData }) => {
 
   return (
     <div className="flex flex-col py-10 px-2 relative">
-      <div className=" mt-2 lg:mt-0">
-        <div className="text-center text-5xl font-semibold p-2">Personal Profile</div>
-        <div className="text-center font-thin text-4xl capitalize p-2">
-          Welcome {fname}
-        </div>
+      <div className="mt-2">
+        <div className="text-center text-5xl font-semibold p-2">Personal Details</div>
         <button
-          className="absolute top-0 md:top-[16vh] right-0 lg:right-60 mr-1 lg:mr-[7vw] bg-red-700 hover:bg-red-800 text-white text-lg rounded-lg lg:rounded-xl py-3 lg:py-4 px-3 lg:px-5 shadow-md border border-pink-400 font-semibold font-mono"
+          className="absolute top-0 right-0 lg:right-48 mr-1 mt-1 lg:mr-4 bg-pink-700 text-white text-lg hover:scale-105 rounded-br-3xl rounded-tr-3xl py-3 lg:py-4 px-2 pr-4 lg:px-6 shadow-md border border-pink-400 font-semibold font-mono"
           onClick={handleLogout}
         >
-          Logout
+          <FaSignOutAlt className="inline-flex mr-2"/>
+          <span>Logout</span>
         </button>
       </div>
       <div className="border-4 max-w-4xl container mx-auto my-10 ">
@@ -228,8 +232,75 @@ const Dashboard = ({ userData }) => {
               </div>
             )}
             {tab.cartSummary && (
-              <div className="text-lg pl-1 pt-10 min-h-[20vh]">
-                <h1>No items added to cart presently.</h1>
+              <div className="text-sm pl-1 min-h-[20vh] text-slate-700">
+                {
+                  cart.quantity > 0 ? (
+                    <div className="w-full lg:flex-2 lg:pt-1">
+                      <table
+                        className="flex flex-col items-center justify-center lg:table w-100%"
+                        style={{ borderSpacing: "20px" }}
+                      >
+                        <thead>
+                          <tr className="hidden lg:table-row text-base">
+                            <th>Product</th>
+                            <th>Name</th>
+                            <th>Extras</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        {cart.products.map((product) => (
+                          <tbody key={product._id} className=" w-full">
+                            <tr
+                              className="flex flex-col items-center justify-center mb-4 lg:mb-0 lg:table-row"
+                              style={{ marginBottom: "20px" }}
+                            >
+                              <td className=" w-full lg:table-row">
+                                <div className="h-[35vh] w-full lg:w-m100 lg:h-m100 relative">
+                                  <Image
+                                    src={product.img}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    alt=""
+                                  className="lg:ml-30"/>
+                                </div>
+                              </td>
+                              <td className="lg:text-center pl-[14vw] lg:pl-0 w-full lg:w-auto">
+                                <span className="w-full text-24px lg:text-18px text-main-color font-medium ">
+                                  {product.title}
+                                </span>
+                              </td>
+                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                                <span className={`hidden lg:inline ${styles.extras}`}>
+                                  {product.options.map((option) => (
+                                    <span key={option._id}>{option.text}</span>
+                                  ))}
+                                </span>
+                              </td>
+                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                                <span className={styles.price}>₦{product.price}</span>
+                              </td>
+                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                                <span className={styles.quantity}>{product.quantity}</span>
+                              </td>
+                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                                <span
+                                  className={`${styles.total} text-21px lg:text-18px font-medium`}
+                                >
+                                  ₦{product.price * product.quantity}
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                    </div>                    
+                  ) : 
+                  (
+                    <h1>No items added to cart presently.</h1>
+                  )
+                }
               </div>
             )}
           </div>

@@ -81,8 +81,8 @@ const Login = ({ user }) => {
   };
 
   return (
-    <div className="bg-slate-50 flex justify-center lg:items-center mt-[8vh] lg:mt-0" style={{height:'calc(100vh - 130px)'}}>
-      <div className="flex flex-col border-2 border-slate-300 mx-4 md:mx-0 w-auto lg:w-[32vw] h-[55vh] px-5 py-8 rounded-xl justify-center md:mb-6 bg-slate-100 mt-2">
+    <div className="flex justify-center lg:items-center mt-[8vh] lg:mt-0" style={{height:'calc(100vh - 130px)'}}>
+      <div className="flex flex-col border-2 border-slate-600 mx-4 md:mx-0 w-auto lg:w-[32vw] h-[55vh] px-5 py-10 rounded-tl-3xl rounded-br-3xl justify-center md:mb-6 mt-2">
         {isUser && (
           <h1 className="font-bold text-3xl text-center mb-6">Login</h1>
         )}
@@ -97,7 +97,7 @@ const Login = ({ user }) => {
                 setFName(e.target.value);
                 setError(null);
               }}
-              className="px-3 py-2 rounded-lg w-100% md:w-50% mb-3 md:mb-0 bg-transparent text-lg focus:text-xl"
+              className="px-3 py-2 rounded-lg w-100% md:w-50% mb-3 md:mb-0 bg-white text-lg focus:text-xl"
             />
             <input
               placeholder="Albert"

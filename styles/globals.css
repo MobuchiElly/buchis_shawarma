@@ -17,7 +17,6 @@
   }
 }
 
-
 html,
 body {
   padding: 0;
@@ -44,8 +43,6 @@ input {
   input[type='text']{
     text-indent: 5px;
   }
-  
-  
   
   /* Add styles for the hover state */
   input:hover {
