@@ -129,12 +129,12 @@ const Dashboard = ({ userData }) => {
           </li>
         </ul>
         {/* Tab Content */}
-        <div className="p-4 pt-6 bg-white mx-1">
+        <div className="px-1 pt-4 bg-white mx-1">
           {/* Home Tab Content */}
           <div className="tab-content">
             {tab.profile && (
               <div className="delay-300">
-                <form className="mx-auto p-2 bg-white rounded-md text-lg">
+                <form className="mx-auto p-4 lg:p-6 pt-0 bg-white rounded-md text-lg">
                   <div className="text-red-500 text-sm mb-1 font-semibold font-mono">
                     {error ? error : 'All fields with * are required!'}
                   </div>
@@ -228,7 +228,7 @@ const Dashboard = ({ userData }) => {
             )}
             {tab.history && (
               <div className="text-lg pl-1 min-h-[20vh] pt-10">
-                <h1 className="">You have no purchase history at the moment</h1>
+                <h1 className="px-2">You have no purchase history at the moment</h1>
               </div>
             )}
             {tab.cartSummary && (
@@ -257,7 +257,7 @@ const Dashboard = ({ userData }) => {
                               style={{ marginBottom: "20px" }}
                             >
                               <td className=" w-full lg:table-row">
-                                <div className="h-[35vh] w-full lg:w-m100 lg:h-m100 relative">
+                                <div className="h-[35vh] w-full lg:w-[120px] lg:h-[120px] relative">
                                   <Image
                                     src={product.img}
                                     layout="fill"
@@ -266,25 +266,25 @@ const Dashboard = ({ userData }) => {
                                   className="lg:ml-30"/>
                                 </div>
                               </td>
-                              <td className="lg:text-center pl-[14vw] lg:pl-0 w-full lg:w-auto">
+                              <td className="lg:text-center pl-[20vw] md:pl-[34vw] lg:pl-0 w-full lg:w-auto">
                                 <span className="w-full text-24px lg:text-18px text-main-color font-medium ">
                                   {product.title}
                                 </span>
                               </td>
-                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                              <td className="pl-[20vw] md:pl-[34vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                                 <span className={`hidden lg:inline ${styles.extras}`}>
                                   {product.options.map((option) => (
                                     <span key={option._id}>{option.text}</span>
                                   ))}
                                 </span>
                               </td>
-                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                              <td className="pl-[20vw] md:pl-[34vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                                 <span className={styles.price}>₦{product.price}</span>
                               </td>
-                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                              <td className="pl-[20vw] md:pl-[34vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                                 <span className={styles.quantity}>{product.quantity}</span>
                               </td>
-                              <td className="pl-[14vw] lg:pl-0 w-full lg:w-auto lg:text-center">
+                              <td className="pl-[20vw] md:pl-[34vw] lg:pl-0 w-full lg:w-auto lg:text-center">
                                 <span
                                   className={`${styles.total} text-21px lg:text-18px font-medium`}
                                 >

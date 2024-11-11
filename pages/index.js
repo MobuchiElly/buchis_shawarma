@@ -12,7 +12,8 @@ const Index = ({ shawarmaList }) => {
   const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activePage, setactivePage] = useState(1);
-  
+  const [totalPages, setTotalPages] = useState(1);
+
   const handlePagination = () => {
     if (activePage === 1){
       setshawarmalist(shawarmaList.slice(0, 12));
@@ -24,6 +25,7 @@ const Index = ({ shawarmaList }) => {
   useEffect(() => {
     if(shawarmaList.length){
       setLoading(false);
+      setTotalPages(shawarmaList.length);
     } else {
       setLoading(true);
     }
@@ -38,7 +40,7 @@ const Index = ({ shawarmaList }) => {
       <Link rel="icon" href="/faviconbuchi.ico" />
       <Featured shawarmaList={shawarmalist} />
       <ShawarmaList shawarmaList={shawarmalist} loading={loading}/>
-      {shawarmalist && shawarmalist.length && <Pagination handlePagination={handlePagination} activePage={activePage} setactivePage={setactivePage}/>}
+      {shawarmalist && shawarmalist.length && <Pagination handlePagination={handlePagination} activePage={activePage} setactivePage={setactivePage} totalPages={totalPages}/>}
     </div>
   );
 };
