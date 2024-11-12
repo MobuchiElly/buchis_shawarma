@@ -82,3 +82,7 @@ input {
     background-color: #edf2f7;
     cursor: not-allowed;
   }
+
+  button:disabled {
+    background: #fefefe !important;
+  }

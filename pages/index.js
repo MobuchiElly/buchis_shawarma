@@ -25,7 +25,7 @@ const Index = ({ shawarmaList }) => {
   useEffect(() => {
     if(shawarmaList.length){
       setLoading(false);
-      setTotalPages(shawarmaList.length);
+      setTotalPages(Number(Math.floor(shawarmaList.length/12)));
     } else {
       setLoading(true);
     }
