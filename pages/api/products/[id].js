@@ -8,7 +8,7 @@ const productapi = async (req, res) => {
         cookies, 
     } = req;
 
-    const token = cookies.token;
+    const token = cookies.token; console.log("token:", token);
     await dbConnect();
     
     if (method === 'GET') {

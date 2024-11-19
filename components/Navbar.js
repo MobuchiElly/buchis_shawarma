@@ -37,9 +37,9 @@ const Navbar = () => {
   
 
   return (
-    <div className="flex justify-between items-center md:p-x-15 lg:pr-4 md:px-4 bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
+    <div className="flex justify-between items-center lg:p-x-15 lg:pr-4 lg:px-4 bg-main-bg-600 sticky top-0 h-m130 z-50 text-lg">
       
-      <div className="hidden md:flex md:items-center lg:flex-3 flex-1">
+      <div className="hidden lg:flex lg:items-center lg:flex-3 flex-1">
         <div className="bg-white rounded-full p-2 w-my-50 h-my-50">
           <Image
             src="/img/telephone.png"
@@ -68,8 +68,8 @@ const Navbar = () => {
       </div>
 
       <div className="flex-1 flex justify-end items-center">
-        <div className=" hidden lg:inline-flex text-white font-my500 cursor-pointer pr-6 mr-6">
-          <Link href="/account" className="bg-red-400 p-3 rounded-lg font-bold">
+        <div className="hidden lg:inline-flex text-white font-my500 cursor-pointer pr-6 mr-6">
+          <Link href="/account" className="text-main-color bg-white p-3 rounded-lg font-[700]">
             My Account
           </Link>
         </div>

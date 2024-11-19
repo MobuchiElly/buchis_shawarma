@@ -8,12 +8,11 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { firebaseApp, db } from "@/authentication/firebase-config";
-import { addUserToDb } from "@/HOFunctions/dbFunctions";
 import FadeLoader from "react-spinners/FadeLoader";
 
 const Login = ({ user }) => {
-  const [fname, setFName] = useState(null);
-  const [lname, setLName] = useState(null);
+  const [firstName, setfirstName] = useState(null);
+  const [lastName, setlastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
@@ -55,25 +54,28 @@ const Login = ({ user }) => {
   };
 
   const handleSignUp = async () => {
-    if (fname && email && password) {
-      try {
+    try { 
+      if (firstName && lastName && email && password) {
         const userCred = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
         const id = userCred.user.uid;
-        await addUserToDb(db, "users", id, {
-          name: { firstname: fname, middlename: "", lastname: lname },
+        const userProfile = {
+          name: firstName + " " + lastName + " ",
           email,
-          password,
-        });
-        router.push("/account");
-      } catch (error) {
-        setError("Email already exists. Signup with a new email");
+          authId: id
+        };
+        const res = await axios.post(`${process.env.ENDPOINT_URL}/api/users`, userProfile);
+        if(res.status == 200){
+          router.push("/account");
+        }
+      } else {
+        setError("Please fill in all fields correctly");
       }
-    } else {
-      setError("Please fill in all fields correctly");
+    } catch (error) {
+      setError("Email already exists. Signup with a new email");
     }
   };
   const handleToggle = () => {
@@ -94,7 +96,7 @@ const Login = ({ user }) => {
             <input
               placeholder="John"
               onChange={(e) => {
-                setFName(e.target.value);
+                setfirstName(e.target.value);
                 setError(null);
               }}
               className="px-3 py-2 rounded-lg w-100% md:w-50% mb-3 md:mb-0 bg-white text-lg focus:text-xl"
@@ -102,7 +104,7 @@ const Login = ({ user }) => {
             <input
               placeholder="Albert"
               onChange={(e) => {
-                setLName(e.target.value);
+                setlastName(e.target.value);
                 setError(null);
               }}
               className="px-3 py-2 rounded-lg w-full md:w-50% bg-transparent text-lg focus:text-xl"

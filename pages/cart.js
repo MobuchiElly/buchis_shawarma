@@ -251,3 +251,25 @@ const Cart = () => {
 };
 
 export default Cart;
+
+export const getServerSideProps = (context) => {
+  try {
+    const tokenStr = context.req?.cookies?.token;
+    const token = tokenStr ? JSON.parse(tokenStr) : "";
+    const uid = token ? token.user?.userId : "";
+    if (!uid){
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false
+        }
+      }
+    }
+  } catch(error) {
+    console.error(error);
+  }
+  return {
+    props: {
+    }
+  }
+}

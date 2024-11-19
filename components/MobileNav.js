@@ -10,7 +10,7 @@ const MobileNav = ({quantity}) => {
   };
 
   return (
-    <div className="md:hidden w-full flex items-center h-full pr-6">
+    <div className="lg:hidden w-full flex items-center h-full pr-6">
       <div className="w-3/5 h-full">
         <div className="h-full">
           <Image src="/img/buchislogo.png" alt="logo" width="120" height="100" className="h-full pb-4"/>

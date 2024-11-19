@@ -7,7 +7,6 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { firebaseApp } from "@/authentication/firebase-config";
-import { checkAdminStatus } from "@/HOFunctions/dbFunctions";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
 
@@ -29,35 +28,35 @@ const Login = () => {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       const user = userCred.user;
       const uid = user.uid;
-      
       if (user) {
         const userObj = {
           userId: uid,
           userToken: user.accessToken,
         };
-        
-        const isAdmin = await checkAdminStatus(uid);
-        console.log(isAdmin)
+        const response = await axios.get(`${process.env.ENDPOINT_URL}/api/users/${uid}`);
+        const isAdmin = await response?.data?.isAdmin;
+        if(!isAdmin) {
+          setError("Unathorised to make this request");
+          return;
+        }
         const token = {
           user: userObj,
           isAdmin,
         };
-       
         const res = await axios.post(
           `${process.env.ENDPOINT_URL}/api/login`,
-          {
-            token,
-          }
+          { token }
         );
         if (isAdmin) {
           router.push("/admin");
         } else {
           setError("Unauthorised Personnel");
         }
-      };setLoading(false);
+      };
+      setLoading(false);
     } catch (error) {
       setLoading(false);
-     error.code == "auth/network-request-failed" ? setError("Please check your internet conection") : error.code == "auth/invalid-credential" ? setError("Invalid Credentials") : setError("Please try again");
+      error.code == "auth/network-request-failed" ? setError("Please check your internet conection") : error.code == "auth/invalid-credential" ? setError("Invalid Credentials") : setError("Please try again");
     }
   };
 
@@ -99,7 +98,7 @@ const Login = () => {
       {
         loading && 
         <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center">
-           <FadeLoader size={20}/> 
+           <FadeLoader size={20}/>
         </div>
       }
     </div>

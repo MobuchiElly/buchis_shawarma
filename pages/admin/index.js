@@ -1,19 +1,16 @@
 import axios from "axios";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { firebaseApp } from "@/authentication/firebase-config";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
-import { db } from "../../authentication/firebase-config";
 import cookie from "js-cookie";
-import { getAllAdminUsers, getAllUsers } from "@/HOFunctions/dbFunctions";
 import EditModal from "@/components/modals/EditModal";
 import AddShawarmaBtn from "@/components/AddShawarmaBtn";
 import AddModal from "@/components/modals/AddModal";
 import EditProductModal from "@/components/modals/EditProductModal";
 
-const Index = ({ orders, products, users, adminUsers }) => {
+const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
   const [productsList, setProductsList] = useState(products);
   const [ordersList, setOrdersList] = useState(orders);
   const [allUsers, setAllUsers] = useState(users);
@@ -32,18 +29,17 @@ const Index = ({ orders, products, users, adminUsers }) => {
     admins: false,
   });
   const [open, setOpen] = useState(false);
-
+  
   const handleLogout = async () => {
     await signOut(auth);
-    cookie.remove(token);
+    cookie.remove("token");
     router.push("/admin/login");
   };
 
   const handleDelete = async (productId) => {
     try {
       const res = await axios.delete(
-        `${process.env.ENDPOINT_URL}/api/products/${productId}/`
-      );
+        `${process.env.ENDPOINT_URL}/api/products/${productId}/`, { headers: { Authorization: `Bearer ${adminAuthId}`}});
       setProductsList(productsList.map((product) => product._id !== productId));
     } catch (error) {
       console.log(error);
@@ -54,7 +50,7 @@ const Index = ({ orders, products, users, adminUsers }) => {
     const product = productsList.find((product) => product._id === productId);
     product ? setEditedProduct(product) : null;
     setEditingProduct(true)
-    //editedProduct ? setEditingProduct(true) : null;
+    editedProduct ? setEditingProduct(true) : null;
     try {
       // const res = await axios.put(
       //   `${process.env.ENDPOINT_URL}/api/products/${productId}/`
@@ -69,7 +65,6 @@ const Index = ({ orders, products, users, adminUsers }) => {
     }
   };
   
-console.log("edited product",editedProduct);
   const handleStatus = async (id) => {
     const currentOrder = ordersList.filter((order) => order._id === id)[0];
     const currentStatus = currentOrder.status;
@@ -114,7 +109,7 @@ console.log("edited product",editedProduct);
             Welcome Admin
           </div>
           <button
-            className="absolute top-neg-12 lg:top-9 right-0 lg:right-80 mr-12 bg-red-700 text-white rounded-lg p-2"
+            className="absolute top-neg-12 lg:top-9 right-0 lg:right-80 mr-12 bg-red-700 text-white rounded-lg p-2 px-3 font-[600]"
             onClick={handleLogout}
           >
             LogOut
@@ -214,7 +209,7 @@ console.log("edited product",editedProduct);
                               onClick={() => handleDelete(product._id)}
                               className="p-2 pointer border-none text-white font-semibold rounded bg-crimson-800 hover:bg-crimson-900"
                             >
-                              Delete
+                              Delete product
                             </button>
                           </td>
                         </tr>
@@ -312,10 +307,7 @@ console.log("edited product",editedProduct);
                             <button
                               className="bg-gray-500 text-white p-1 px-2"
                               onClick={() =>
-                                handleUser({
-                                  userId: user.id,
-                                  isAdmin: user.isAdmin,
-                                })
+                                handleUser(user)
                               }
                             >
                               Edit
@@ -385,7 +377,7 @@ console.log("edited product",editedProduct);
         </div>
       </div>
       {openModal && (
-        <EditModal userDetail={userDetail} closeModal={closeModal} />
+        <EditModal userDetail={userDetail} adminAuthId={adminAuthId} closeModal={closeModal} />
       )}
       {
         editingProduct && 
@@ -396,43 +388,41 @@ console.log("edited product",editedProduct);
 };
 
 export const getServerSideProps = async (context) => {
-  const loginCookie = context.req?.cookies;
-  
   try {
-    const tokenString = loginCookie.token;
-    if(!tokenString){
+    const tokenStr = context.req?.cookies?.token;
+    const token = tokenStr ? JSON.parse(tokenStr) : "";
+    if (!token || !token.user.userToken || !token.isAdmin) {
       return {
         redirect: {
           destination: "/admin/login",
           permanent: false,
-        }
-      }
-    }
-  const token = tokenString ? JSON.parse(tokenString) : null;
-  if (!token || !token.user.userToken || !token.isAdmin) {
-    return {
-      redirect: {
-        destination: "/admin/login",
-        permanent: false,
-      },
+        },
+      };
     };
-  }; 
+    // confirm adminStatus
     const admin = token.isAdmin;
+    const uid = token.user.userId;
     //Fetch orders
     const orderRes = await axios.get(`${process.env.ENDPOINT_URL}/api/orders`);
     //Fetch products
     const productRes = await axios.get(
       `${process.env.ENDPOINT_URL}/api/products`
     );
-    //Fetch users
-    const users = await getAllUsers(db, "users");
-    const adminUsers = await getAllAdminUsers(db, "users");
+    
+    const userData = await axios.get(`${process.env.ENDPOINT_URL}/api/users/${uid}`);
+    const authId = await userData?.data?.authId;
+    let users = null;
+      if(authId){
+        users = await axios.get(`${process.env.ENDPOINT_URL}/api/users`, { headers: {Authorization: `Bearer ${authId}`}});
+      };
+    const adminUsers = users.data.filter(user => user.isAdmin === true);
     return {
       props: {
         orders: orderRes.data,
         products: productRes.data,
-        users,
+        users: users.data,
         adminUsers,
+        adminAuthId: authId
       },
     };
   } catch (error) {

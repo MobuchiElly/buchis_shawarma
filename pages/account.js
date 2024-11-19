@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { firebaseApp } from "@/authentication/firebase-config";
 import { signOut, getAuth, onAuthStateChanged } from "firebase/auth";
-import { firebaseApp, db } from "@/authentication/firebase-config";
 import { useRouter } from "next/router";
-import { updateUser, getUserById, getAllUsers } from "@/HOFunctions/dbFunctions";
+import axios from "axios";
 import cookie from "js-cookie";
 import Link from "next/link";
 import { FaSignOutAlt } from "react-icons/fa";
@@ -11,9 +11,10 @@ import styles from "../styles/Cart.module.css";
 import Image from "next/image";
 
 const Dashboard = ({ userData }) => {
-  const [fname, setFname] = useState("");
-  const [mname, setMname] = useState("");
-  const [lname, setLname] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [midddleName, setMidddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [residenceState, setResidenceState] = useState("");
   const [contact, setContact] = useState("");
@@ -25,7 +26,7 @@ const Dashboard = ({ userData }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const cart = useSelector(state => state.cart);
-  console.log(cart);
+ 
 
   const auth = getAuth(firebaseApp);
   const router = useRouter();
@@ -46,34 +47,42 @@ const Dashboard = ({ userData }) => {
 
   const submitForm = async () => {
     try {
-      await updateUser(db, "users", uid, {
-        name: { firstname: fname, middlename: mname, lastname: lname },
-        address,
+      const updateBody = {
+        name: firstName + " " +  midddleName + " " + lastName,
         contact,
-        state: residenceState,
-      });
+        address,
+        state: residenceState
+      };
+      const res = await axios.put(`${process.env.ENDPOINT_URL}/api/users/${userData.authId}`, updateBody);
     } catch (error) {
       setError('Please fill all fields');
       console.error("error updating user profile", error);
     }
   };
+  
   useEffect(() => {
     const autoFillForm = () => {
       if (!userData) {
         console.error("Error loading user-data from database");
         return;
-      }; 
-      
-      const { name, state } = userData;
+      };
+
+      const { name } = userData;
       if (name) {
-        const { firstname, middlename, lastname } = name;
-        fname == "" ? setFname(firstname) : "";
-        lname == "" ? setLname(lastname) : "";
-        mname == "" ? setMname(middlename) : "";
+        const nameArr = name.split(" ");
+        firstName == "" ? setFirstName(nameArr[0]) : "";
+        if (nameArr.length === 2){
+          lastName == "" ? setLastName(nameArr[1]) : "";
+        }
+        if (nameArr.length === 3){
+          midddleName == "" ? setMidddleName(nameArr[1]) : "";
+          lastName == "" ? setLastName(nameArr[2]) : "";
+        }        
       }
       contact == "" ? setContact(userData.contact) : "";
       address == "" ? setAddress(userData.address) : "";
       residenceState == "" ? setResidenceState(userData.state) : "";
+      email == "" ? setEmail(userData.email) : "";
     };
     autoFillForm();
     return () => autoFillForm();
@@ -148,9 +157,9 @@ const Dashboard = ({ userData }) => {
                       type="text"
                       placeholder="John"
                       onChange={(e) => {
-                        setFname(e.target.value);
+                        setFirstName(e.target.value);
                       }}
-                      value={fname}
+                      value={firstName}
                     />
                   </div>
                   <div className="mb-4">
@@ -162,9 +171,9 @@ const Dashboard = ({ userData }) => {
                       type="text"
                       placeholder="Doe"
                       onChange={(e) => {
-                        setMname(e.target.value);
+                        setMidddleName(e.target.value);
                       }}
-                      value={mname}
+                      value={midddleName}
                     />
                   </div>
                   <div className="mb-4">
@@ -176,9 +185,21 @@ const Dashboard = ({ userData }) => {
                       type="text"
                       placeholder="Smith"
                       onChange={(e) => {
-                        setLname(e.target.value);
+                        setLastName(e.target.value);
                       }}
-                      value={lname}
+                      value={lastName}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                      Email *
+                    </label>
+                    <input
+                      className="border rounded-lg disabled:bg-gray-50 w-full py-2 focus:text-xl px-2 hover:outline-none"
+                      type="text"
+                      placeholder="Smith"
+                      value={email}
+                      disabled
                     />
                   </div>
                   <div className="mb-4">
@@ -188,7 +209,7 @@ const Dashboard = ({ userData }) => {
                     <input
                       className="border rounded-lg w-full py-2 focus:text-xl px-3"
                       type="tel"
-                      placeholder="555-555-5555"
+                      placeholder="0803-XXX-XXXX"
                       onChange={(e) => {
                         setContact(e.target.value);
                       }}
@@ -328,55 +349,32 @@ const Dashboard = ({ userData }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const loginCookie = context.req?.cookies || "";
-  const tokenString = loginCookie.token;
-  let uid = "";
-  if (!tokenString) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
-  if (tokenString) {
-    try {
-      const token = JSON.parse(tokenString);
-      if (!token) {
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false,
-          },
-        };
-      }
-      uid = token.user.userId;
-      const userData = await getUserById("users", uid);
-      if(!uid) {
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false
-          },
+  try {
+    const tokenStr = context.req?.cookies?.token;
+    const token = tokenStr ? JSON.parse(tokenStr) : "";
+    const uid = token ? token.user?.userId : '';
+    if(!uid){
+      return {
+        redirect: {
+          destination: "/login",
+          permanent: false
         }
+      }     
+    }
+    const userData = await axios.get(`${process.env.ENDPOINT_URL}/api/users/${uid}`);
+    return {
+      props: {
+        userData: userData.data
       }
-      if (userData){
-        return {
-          props: {
-            userData,
-          },
-        };
+    }
+  } catch (err){
+    console.error(err);
+    return {
+      props: {
+        userData: null
       }
-    } catch (error) {
-      console.error(error);
     }
   }
-
-  return {
-    props: {
-      userData: null,
-    },
-  };
 };
 
 export default Dashboard;

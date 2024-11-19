@@ -1,35 +1,36 @@
 import { useState, useEffect } from "react";
-import { addAdmin, removeAdmin } from "../../HOFunctions/dbFunctions";
+import axios from "axios";
 
-export const EditModal = ({ userDetail, closeModal }) => {
+export const EditModal = ({ userDetail, adminAuthId, closeModal }) => {
   const [accountType, setAccountType] = useState("");
   const [lockAccount, setLockAccount] = useState("yes");
-  const { userId, isAdmin } = userDetail;
+  const { authId, isAdmin } = userDetail;
+
   useEffect(() => {
     isAdmin ? setAccountType('admin') : setAccountType('user');
   }, [isAdmin]);
-
+  
   const handleUpdate = async (e) => {
     e.preventDefault();
     //if lockAccount is set to yes i would set Lock account to true thus locking the account
-    if (accountType == 'admin') {
-      try {
-        await addAdmin(userId);
-        console.log('successfully aded user as an admin');
-      } catch (err) {
-        console.error("error updating admin role", err);
+    try {
+      if (accountType == 'admin') {
+        const res = await axios.put(`${process.env.ENDPOINT_URL}/api/users/${authId}`, { isAdmin: true}, { headers: {Authorization: `Bearer ${adminAuthId}`}});
+        if(res.status === 200){
+          console.log('successfully aded user as an admin');
+          closeModal();
+        }
+      } else {
+          const res = await axios.put(`${process.env.ENDPOINT_URL}/api/users/${authId}`, { isAdmin: false}, { headers: {Authorization: `Bearer ${adminAuthId}`}});
+          if (res.status === 200) {
+            console.log("Successfully updated user role");
+            closeModal();
+          }
       }
-    } else {
-      try {
-        await removeAdmin(userId);
-        console.log('successfully removed user from admin role');
-      } catch (err) {
-        console.error("error removing admin role", err);
-      }
-    } 
-    return;
+    } catch (err) {
+      console.error("error updating user role", err);
+    }
   };
-
 
   return (
     <div

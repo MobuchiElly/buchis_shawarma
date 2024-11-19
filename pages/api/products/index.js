@@ -5,7 +5,7 @@ const productapi = async (req, res) => {
     const { method, cookies } = req;
     const token = cookies.token;
     await dbConnect();
-
+    console.log("token:", token);
     if (req.method === 'GET') {
         try{
             const products = await Product.find();
@@ -15,9 +15,9 @@ const productapi = async (req, res) => {
         }
     }
     if (req.method === 'POST') {
-    //     if (!token || token !== process.env.TOKEN){
-    //         return res.status(401).json('Not Authenticated/Authorised');
-    //     }
+        if (!token || token !== process.env.TOKEN){
+            return res.status(401).json('Not Authenticated/Authorised');
+        }
 
         try{
             const product = await Product.create(req.body);
@@ -25,6 +25,10 @@ const productapi = async (req, res) => {
         }catch(err){
            res.status(500).json(err) 
         }
+    }
+
+    if (req.method === 'DELETE') {
+        return res.send("Testing...");
     }
 }
 
