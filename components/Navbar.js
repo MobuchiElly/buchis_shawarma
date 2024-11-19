@@ -69,7 +69,7 @@ const Navbar = () => {
 
       <div className="flex-1 flex justify-end items-center">
         <div className="hidden lg:inline-flex text-white font-my500 cursor-pointer pr-6 mr-6">
-          <Link href="/account" className="text-main-color bg-white p-3 rounded-lg font-[700]">
+          <Link href="/account" className="text-main-color bg-white bg-opacity-95 p-3 rounded-lg font-[700]">
             My Account
           </Link>
         </div>

@@ -1,8 +1,6 @@
 import { FaArrowLeft, FaArrowRight, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 const Pagination = ({activePage, setactivePage, handlePagination, totalPages}) => {
-  console.log("activePage:",activePage);
-  console.log("totalPages:",totalPages);
   return (
     <div className="min-h-10 py-6 px-24 flex flex-col">
       <div className="border border-b-black w-full mb-4"></div>
