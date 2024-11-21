@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import styles from "../../styles/AddModal.module.css";
 import Image from "next/image";
 
-const AddModal = ({ setOpen }) => {
+const AddModal = ({ setOpen, adminAuthId }) => {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState(null);
   const [desc, setDesc] = useState(null);
@@ -38,7 +38,6 @@ const AddModal = ({ setOpen }) => {
         process.env.NEXT_PUBLIC_CLOUDINARY_ENDPOINT,
         data
       );
-        console.log("uploadRes",uploadRes);
       const { url } = uploadRes.data;
       const newProduct = {
         title,
@@ -47,10 +46,12 @@ const AddModal = ({ setOpen }) => {
         extraOptions,
         img: url,
       };
-      await axios.post(`${process.env.ENDPOINT_URL}/api/products`, newProduct);
-      //setOpen(false);
+      const res = await axios.post(`${process.env.ENDPOINT_URL}/api/products`, newProduct, {headers: {Authorization: `Bearer ${adminAuthId}`}});
+      if(res.status === 201){
+        setOpen(false);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

@@ -1,11 +1,13 @@
 import dbConnect from "@/utils/mongodb";
 import Product from "@/models/Product";
+import adminProtection from "@/middleware";
+import User from "@/models/User";
 
 const productapi = async (req, res) => {
     const { method, cookies } = req;
     const token = cookies.token;
     await dbConnect();
-    console.log("token:", token);
+
     if (req.method === 'GET') {
         try{
             const products = await Product.find();
@@ -15,20 +17,13 @@ const productapi = async (req, res) => {
         }
     }
     if (req.method === 'POST') {
-        if (!token || token !== process.env.TOKEN){
-            return res.status(401).json('Not Authenticated/Authorised');
-        }
-
+        adminProtection(req, res);
         try{
             const product = await Product.create(req.body);
             res.status(201).json(product);
         }catch(err){
            res.status(500).json(err) 
         }
-    }
-
-    if (req.method === 'DELETE') {
-        return res.send("Testing...");
     }
 }
 

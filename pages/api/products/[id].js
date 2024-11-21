@@ -1,5 +1,6 @@
 import dbConnect from "@/utils/mongodb";
 import Product from "@/models/Product";
+import adminProtection from "@/middleware";
 
 const productapi = async (req, res) => {
     const {
@@ -8,7 +9,7 @@ const productapi = async (req, res) => {
         cookies, 
     } = req;
 
-    const token = cookies.token; console.log("token:", token);
+    const token = cookies.token;
     await dbConnect();
     
     if (method === 'GET') {
@@ -19,10 +20,8 @@ const productapi = async (req, res) => {
             res.status(500).json(err);
         }
     }
+    await adminProtection(req, res);
     if (method === 'PUT') {
-        // if(!token) {
-        //     return res.status(401).json('Not Authenticated/Authorised to carry out this action')
-        // }
         try{
             const product = await Product.findByIdAndUpdate(id, req.body, {
                 new:true,
@@ -33,9 +32,6 @@ const productapi = async (req, res) => {
         }
     }
     if (method === 'POST') {
-        if(!token){
-            return res.status(401).json("Not Authorised to carry out this action");
-        }
         try{
             const product = await Product.create(req.body);
             res.status(201).json(product);
@@ -44,9 +40,7 @@ const productapi = async (req, res) => {
         }
     }
     if (method === 'DELETE') {
-        if(!token){
-            return res.status(401).json('Not Authenticated/Authorised to carry out this action');
-        }
+        await adminProtection(req, res);
         try{
             await Product.findByIdAndDelete(id);
             res.status(200).json("Item successfully deleted");

@@ -3,12 +3,11 @@ import Order from "@/models/Order";
 
 const handler = async (req, res) => {
     const { method } = req;
-    console.log(req.body);
     await dbConnect();
 
     if(method === "GET"){
         try{
-            const orders = await Order.find();
+            const orders = await Order.find().sort({status: 1});
             res.status(200).json(orders);
         } catch(error){
             res.status(500).json(error);

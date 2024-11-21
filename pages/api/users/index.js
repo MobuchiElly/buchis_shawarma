@@ -6,7 +6,7 @@ const userApi = async(req, res) => {
     await dbConnect();
     if (req.method === "GET") { 
         const { filter, isAdmin } = req.query;
-        const isUserAdmin = await adminProtection(req, res, User);
+        const isUserAdmin = await adminProtection(req, res);
         const queryObj = {
             ...(filter ? { name: { $regex: filter, $options: "i" } } : {}),
             ...(isAdmin !== undefined ? { isAdmin: isAdmin === "true" } : {})

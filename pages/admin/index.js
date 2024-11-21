@@ -9,6 +9,8 @@ import EditModal from "@/components/modals/EditModal";
 import AddShawarmaBtn from "@/components/AddShawarmaBtn";
 import AddModal from "@/components/modals/AddModal";
 import EditProductModal from "@/components/modals/EditProductModal";
+import { FadeLoader } from "react-spinners";
+import ProductList from "@/components/ProductList";
 
 const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
   const [productsList, setProductsList] = useState(products);
@@ -29,6 +31,7 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
     admins: false,
   });
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const handleLogout = async () => {
     await signOut(auth);
@@ -41,45 +44,40 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
       const res = await axios.delete(
         `${process.env.ENDPOINT_URL}/api/products/${productId}/`, { headers: { Authorization: `Bearer ${adminAuthId}`}});
       setProductsList(productsList.map((product) => product._id !== productId));
+      if(res.status === 200){
+        setProductsList(productsList.filter(product => product._id != productId));
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  const handleEdit = async (productId) => {    
-    const product = productsList.find((product) => product._id === productId);
-    product ? setEditedProduct(product) : null;
-    setEditingProduct(true)
-    editedProduct ? setEditingProduct(true) : null;
+  const handleEdit = async (productId) => {
     try {
-      // const res = await axios.put(
-      //   `${process.env.ENDPOINT_URL}/api/products/${productId}/`
-      // );
-      setProductsList(
-        productsList.filter((product) =>
-          product._id === productId ? res.data : product
-        )
-      );
+      const product = productsList.find((product) => product._id === productId);
+      setEditedProduct(product);
+      setEditingProduct(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
   
   const handleStatus = async (id) => {
-    const currentOrder = ordersList.filter((order) => order._id === id)[0];
-    const currentStatus = currentOrder.status;
-
     try {
-      const res = await axios.put(
-        `${process.env.ENDPOINT_URL}/api/orders/${id}`,
-        { status: currentStatus + 1 }
-      );
-      setOrdersList([
-        res.data,
-        ...ordersList.filter((order) => order._id !== id),
-      ]);
+      const currentOrder = ordersList.filter((order) => order._id === id)[0];
+      const currentStatus = currentOrder.status;
+      if(currentStatus < 2) {
+        const res = await axios.put(
+          `${process.env.ENDPOINT_URL}/api/orders/${id}`,
+          { status: currentStatus + 1 }
+        );
+        setOrdersList([
+          res.data,
+          ...ordersList.filter((order) => order._id !== id),
+        ]);
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -105,11 +103,11 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
     <div className="min-h-screen">
       <div className="flex flex-col py-10 px-2">
         <div className="relative">
-          <div className="text-center font-semibold text-4xl mt-1 lg:mt-0">
-            Welcome Admin
+          <div className="text-center font-[700] text-4xl mt-1 lg:mt-0">
+            DASHBOARD
           </div>
           <button
-            className="absolute top-neg-12 lg:top-9 right-0 lg:right-80 mr-12 bg-red-700 text-white rounded-lg p-2 px-3 font-[600]"
+            className="absolute top-neg-12 lg:top-8 right-0 lg:right-80 mr-12 bg-main-color text-white rounded-lg p-3 px-3 font-[650]"
             onClick={handleLogout}
           >
             LogOut
@@ -183,8 +181,8 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
                         <th>Action</th>
                       </tr>
                     </tbody>
-                    {productsList.map((product) => (
-                      <tbody key={product._id} className=''>
+                    {productsList && productsList.map((product) => product && (
+                      <tbody key={product._id}>
                         <tr>
                           <td>
                             <Image
@@ -216,7 +214,7 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
                       </tbody>
                     ))}
                   </table>
-                  {open && <AddModal setOpen={setOpen} />}
+                  {open && <AddModal setOpen={setOpen} adminAuthId={adminAuthId} />}
                 </div>
               )}
               {tab.orders && (
@@ -230,7 +228,7 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
                         <th>Id</th>
                         <th>Customer</th>
                         <th>TotalPrice</th>
-                        <th>PaymentMethod</th>
+                        <th>Payment-Method</th>
                         <th>Status</th>
                         <th>Action</th>
                       </tr>
@@ -251,7 +249,7 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
                           <td>{status[order.status]}</td>
                           <td>
                             <button
-                              className="p-3 pointer bg-slate-100 m-1"
+                              className="p-3 pointer bg-black m-1 bg-opacity-10 font-[600]"
                               onClick={() => handleStatus(order._id)}
                             >
                               Next stage
@@ -381,7 +379,13 @@ const Index = ({ orders, products, users, adminUsers, adminAuthId }) => {
       )}
       {
         editingProduct && 
-        <EditProductModal product={editedProduct} closeModal={() => setEditingProduct(false)}/>
+        <EditProductModal product={editedProduct} closeModal={() => setEditingProduct(false)} adminAuthId={adminAuthId} loadingState={(loadingValue) => setLoading(loadingValue)}/>
+      }
+      {
+        loading && 
+        <div className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50">
+           <FadeLoader size={20}/>
+        </div>
       }
     </div>
   );

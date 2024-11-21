@@ -17,13 +17,11 @@ export const EditModal = ({ userDetail, adminAuthId, closeModal }) => {
       if (accountType == 'admin') {
         const res = await axios.put(`${process.env.ENDPOINT_URL}/api/users/${authId}`, { isAdmin: true}, { headers: {Authorization: `Bearer ${adminAuthId}`}});
         if(res.status === 200){
-          console.log('successfully aded user as an admin');
           closeModal();
         }
       } else {
           const res = await axios.put(`${process.env.ENDPOINT_URL}/api/users/${authId}`, { isAdmin: false}, { headers: {Authorization: `Bearer ${adminAuthId}`}});
           if (res.status === 200) {
-            console.log("Successfully updated user role");
             closeModal();
           }
       }

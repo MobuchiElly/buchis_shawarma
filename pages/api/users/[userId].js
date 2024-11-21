@@ -22,7 +22,7 @@ const userApi = async(req, res) => {
             const { isAdmin, ...updateBody } = req.body;
             const { userId } = req.query;
             if(req.body.hasOwnProperty("isAdmin")){
-                const isUserAdmin = await adminProtection(req, res, User);
+                const isUserAdmin = await adminProtection(req, res);
                 updateBody.isAdmin = isAdmin;
             }
             if(!userId){
@@ -39,14 +39,14 @@ const userApi = async(req, res) => {
         }
     }
 
-    if (req.method === "DELETE"){
-        try{
-            const deleteUser = await User.findOneAndDelete({authId:userId});
-            return res.send("Successfully deleted user");
-        } catch (error) {
-            res.send("Error deleting user from db");
-        }
-    }
+    // if (req.method === "DELETE"){
+    //     try{
+    //         const deleteUser = await User.findOneAndDelete({authId:userId});
+    //         return res.send("Successfully deleted user");
+    //     } catch (error) {
+    //         res.send("Error deleting user from db");
+    //     }
+    // }
 }
 
 export default userApi;

@@ -141,7 +141,7 @@ const Cart = () => {
                           src={product.img}
                           layout="fill"
                           objectFit="cover"
-                          alt=""
+                          alt="product image"
                         className="lg:ml-30"/>
                       </div>
                     </td>

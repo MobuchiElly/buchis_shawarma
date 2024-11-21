@@ -29,7 +29,6 @@ Welcome to Buchi's Shawarma Web Application! This project is aimed at creating a
 - **NextJS API route**: Next.js API route: A tool for efficiently building backend routes in Next.js applications.
 - **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - **MongoDB**: A NoSQL database for storing application data.
-- **Firestore**: A NoSQL database for storing and synchronizing application data in real-time.
 - **Mongoose**: A MongoDB object modeling tool designed to work in an asynchronous environment.
 - **Cloudinary**: A cloud-based service for managing and optimizing images.
 - **Postman**: tool for testing my API endpoints.
@@ -44,7 +43,7 @@ https://buchis-shawarma.vercel.app/
 
 ## Contributors
 
-- [BuchiDev- Eleazer Mobuchi Ugwu](https://github.com/MobuchiElly/)
+- [BuchiDev- Eleazer Mobuchi Ugwu](https://github.com/MobuchiElly/buchis_shawarma)
 
 ## License
 
